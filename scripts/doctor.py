@@ -59,6 +59,17 @@ def main():
         wanted = re.findall(r'^(brew|cask) "([^"]+)"', (ROOT / "Brewfile").read_text(), re.M)
         missing = [name for kind, name in wanted if name not in (formulae if kind == "brew" else casks)]
         report(not missing, "Brewfile packages installed" + (": " + ", ".join(missing) if missing else ""))
+    store_apps = re.findall(r'^mas "([^"]+)",\s*id:\s*(\d+)', (ROOT / "Brewfile").read_text(), re.M)
+    if store_apps:
+        report(bool(shutil.which("mas")), "Mac App Store CLI available")
+        if shutil.which("mas"):
+            store = run(["mas", "list"])
+            installed_ids = set(re.findall(r"^\s*(\d+)\s", store.stdout, re.M))
+            missing = [name for name, app_id in store_apps if app_id not in installed_ids]
+            report(store.returncode == 0 and not missing,
+                   "Brewfile App Store apps installed" + (": " + ", ".join(missing) if missing else ""))
+            if store.returncode:
+                print(store.stderr.strip())
     if (ROOT / "configs/dot_config/mise/config.toml").exists():
         report(bool(shutil.which("mise")), "mise available")
         if shutil.which("mise"):

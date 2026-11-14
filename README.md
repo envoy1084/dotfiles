@@ -54,6 +54,7 @@ VS Code settings, tasks, keybindings when present, snippets and extension choice
 
 1. Install Apple's Command Line Tools (`xcode-select --install`) and Homebrew from https://brew.sh.
 2. Install GitHub CLI (`brew install gh`) and authenticate (`gh auth login`). A private repo needs authentication before cloning. Register a new SSH key when choosing SSH, or use HTTPS.
+   Sign in to the Mac App Store with the account that owns your apps; Dropover and Amphetamine restore through `mas` entries in Brewfile.
 3. Clone your private repository into `~/dotfiles`.
 4. Preview, then restore:
 
@@ -109,7 +110,7 @@ Changing the shared identity in `configs/.chezmoidata.toml` changes the Git temp
 
 ## Packages and growth
 
-`Brewfile` declares chezmoi and GitHub CLI, 45 shell/CLI tools, eight app casks (including VLC), and JetBrains Mono Nerd Font. `./setup packages --write` installs with `--no-upgrade` and never invokes cleanup. Required dependencies may still be upgraded. A Brewfile records package selection, not exact historical binary versions.
+`Brewfile` declares the terminal tools, chezmoi, GitHub CLI, the Mac App Store CLI (`mas`), desktop app casks and JetBrains Mono Nerd Font. Dropover and Amphetamine use App Store IDs. `./setup packages --write` installs with `--no-upgrade` and never invokes cleanup. Required dependencies may still be upgraded. A Brewfile records package selection, not exact historical binary versions. See [daily apps](docs/daily-apps.md) for installation channels and first-launch steps.
 
 When adopting a tool, add its package declaration and useful config together. To manage another config, use `chezmoi add <specific-path>` and inspect the result. Changes to the desktop should be imported and committed deliberately. Do not enable automatic commit/push of every live app change.
 

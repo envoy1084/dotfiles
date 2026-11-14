@@ -9,6 +9,7 @@ The [README](../README.md) covers restoring this setup on another Mac. These pag
 | [OmniWM](omniwm.md) | Right Command / WASD window and workspace shortcuts |
 | [Ghostty](ghostty.md) | Terminal appearance, tabs, splits and keyboard shortcuts |
 | [VS Code](vscode.md) | Your settings, fonts, snippets and extension restore |
+| [Daily apps](daily-apps.md) | Messaging, screenshots, recording, file shelves and keep-awake |
 | [Shell guide](shell/index.md) | Category index for the terminal toolkit |
 | [Daily commands](shell/daily.md) | The small set of commands and keys to learn first |
 | [Yazi](shell/yazi.md) | File browser cheat sheet, bookmarks and previews |

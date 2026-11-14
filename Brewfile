@@ -2,6 +2,7 @@
 # This is not an exact-version lock or a full machine restore.
 brew "chezmoi"
 brew "gh"
+brew "mas"
 brew "starship"
 brew "fzf"
 brew "zoxide"
@@ -61,3 +62,15 @@ cask "superwhisper"
 cask "thaw@beta"
 cask "visual-studio-code"
 cask "vlc"
+
+# Daily communication and capture apps
+cask "slack"
+cask "discord"
+cask "telegram"
+cask "signal"
+cask "shottr"
+cask "cap"
+
+# Mac App Store; sign in to the App Store on each Mac.
+mas "Dropover", id: 1355679052
+mas "Amphetamine", id: 937984704

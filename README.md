@@ -70,13 +70,15 @@ No apps are automatically restarted. Some preference changes need a new login or
 Managed configuration:
 
 - `configs/dot_config/omniwm/`: workspace settings, shell layout, wallpaper palette.
-- `configs/private_Library/Application Support/com.mitchellh.ghostty/`: current Ghostty config.
+- `configs/private_Library/Application Support/com.mitchellh.ghostty/`: Ghostty appearance, keyboard, notifications, and window restore settings.
 - `configs/dot_zprofile`: Homebrew environment, portable local-bin PATH, optional local overrides.
 - `configs/private_dot_ssh/private_config`: GitHub client options, no keys.
 - `configs/dot_gitconfig.tmpl`: Git identity from `configs/.chezmoidata.toml`.
 - `configs/.chezmoi.toml.tmpl`: machine-local chezmoi initialization; resolves the actual checkout path.
 
 The desktop uses five scrolling/niri workspaces, a Tokyo Night shell theme, right-Command/WASD shortcuts, and an enabled Ghostty Quake terminal. Clipboard history and IPC remain disabled. See [OmniWM shortcuts and settings](docs/omniwm.md).
+
+Ghostty uses JetBrains Mono Nerd Font, TokyoNight Night, and local shortcuts that complement OmniWM. See [Ghostty shortcuts and settings](docs/ghostty.md).
 
 ## Machine-specific settings
 
@@ -86,7 +88,7 @@ Changing the shared identity in `configs/.chezmoidata.toml` changes the Git temp
 
 ## Packages and growth
 
-`Brewfile` currently declares chezmoi and GitHub CLI plus the existing seven app casks. `./setup packages --write` installs with `--no-upgrade` and never invokes cleanup. Required dependencies may still be upgraded. A Brewfile records package selection, not exact historical binary versions.
+`Brewfile` declares chezmoi and GitHub CLI, seven app casks, and JetBrains Mono Nerd Font. `./setup packages --write` installs with `--no-upgrade` and never invokes cleanup. Required dependencies may still be upgraded. A Brewfile records package selection, not exact historical binary versions.
 
 When adopting a tool, add its package declaration and useful config together. To manage another config, use `chezmoi add <specific-path>` and inspect the result. Changes to the desktop should be imported and committed deliberately. Do not enable automatic commit/push of every live app change.
 
@@ -109,7 +111,7 @@ Portable application exports still to capture: Raycast preferences/extensions/sh
 
 ## Research and scratch work
 
-Use `research/` for temporary notes, audits, proposals, and scratch files. Git ignores that folder. Keep `docs/` for the maintained `omniwm.md` reference.
+Use `research/` for temporary notes, audits, proposals, and scratch files. Git ignores that folder. Keep `docs/` for concise, maintained app references such as `omniwm.md` and `ghostty.md`.
 
 ## Recovery and privacy
 

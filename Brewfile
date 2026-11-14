@@ -4,6 +4,7 @@ brew "chezmoi"
 brew "gh"
 
 cask "claude-code"
+cask "font-jetbrains-mono-nerd-font"
 cask "ghostty"
 cask "omniwm"
 cask "raycast"

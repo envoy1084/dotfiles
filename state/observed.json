@@ -1,0 +1,130 @@
+{
+  "captured_at": "2026-11-14T12:21:24.814910+05:30",
+  "applications": [
+    {
+      "name": "Ghostty.app",
+      "bundle_id": "com.mitchellh.ghostty",
+      "version": "1.4.0"
+    },
+    {
+      "name": "Helium.app",
+      "bundle_id": "net.imput.helium",
+      "version": "0.21.3.1"
+    },
+    {
+      "name": "OmniWM.app",
+      "bundle_id": "com.barut.OmniWM",
+      "version": "0.8.0"
+    },
+    {
+      "name": "Raycast.app",
+      "bundle_id": "com.raycast.macos",
+      "version": "2.12.1.0"
+    },
+    {
+      "name": "Safari.app",
+      "bundle_id": "com.apple.Safari",
+      "version": "27.2"
+    },
+    {
+      "name": "T3 Code (Beta).app",
+      "bundle_id": "com.t3tools.t3code",
+      "version": "0.1.9"
+    },
+    {
+      "name": "Thaw.app",
+      "bundle_id": "com.stonerl.Thaw",
+      "version": "3.0.0-beta.6"
+    },
+    {
+      "name": "Visual Studio Code.app",
+      "bundle_id": "com.microsoft.VSCode",
+      "version": "1.146.0"
+    },
+    {
+      "name": "superwhisper.app",
+      "bundle_id": "com.superduper.superwhisper",
+      "version": "3.3.0"
+    }
+  ],
+  "homebrew_receipts": [
+    {
+      "token": "claude-code",
+      "installed": "2.1.311"
+    },
+    {
+      "token": "ghostty",
+      "installed": "1.4.0"
+    },
+    {
+      "token": "omniwm",
+      "installed": "0.8.0"
+    },
+    {
+      "token": "raycast",
+      "installed": "2.12.0.0"
+    },
+    {
+      "token": "superwhisper",
+      "installed": "3.2.2"
+    },
+    {
+      "token": "thaw@beta",
+      "installed": "3.0.0-beta.6"
+    },
+    {
+      "token": "visual-studio-code",
+      "installed": "1.146.0"
+    }
+  ],
+  "external_installations": [
+    {
+      "name": "Helium",
+      "version": "0.21.3.1",
+      "location": "/Applications/Helium.app",
+      "restore": "Manual; not Homebrew tracked"
+    },
+    {
+      "name": "T3 Code",
+      "version": "0.1.9",
+      "location": "/Applications/T3 Code (Beta).app",
+      "restore": "Manual; preserve existing distribution channel"
+    },
+    {
+      "name": "Codex CLI",
+      "version": "0.169.0",
+      "location": "~/.local/bin/codex -> ~/.codex/packages/standalone/current/bin/codex",
+      "restore": "Standalone installer; authentication is separate"
+    },
+    {
+      "name": "T3 CLI",
+      "version": "0.1.9",
+      "location": "~/.local/bin/t3 -> ~/.t3/bin/t3",
+      "restore": "T3-managed installation"
+    }
+  ],
+  "style": {
+    "name": "celestial",
+    "version": "1.1.0",
+    "source": "github:OmniNull/OmniWM@v0.8.0",
+    "customizations": "No differences from its installed manifest at audit time",
+    "active_profile": "default"
+  },
+  "manual_steps": [
+    "Install external apps/CLIs through their existing distribution channels",
+    "Grant macOS application permissions",
+    "Configure login items",
+    "Sign in to agents and services",
+    "Generate/register an SSH key for a new Mac",
+    "Export/import Raycast configuration",
+    "Export/import Thaw layout",
+    "Export/import Superwhisper modes, model selection, and shortcuts"
+  ],
+  "excluded": [
+    "SSH private/public keys",
+    "Keychain and auth tokens",
+    "Agent sessions and conversations",
+    "Application and browser databases",
+    "AeroSpace leftovers"
+  ]
+}

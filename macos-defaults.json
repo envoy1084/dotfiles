@@ -1,0 +1,34 @@
+{
+  "settings": [
+    {
+      "domain": "NSGlobalDomain",
+      "key": "AppleInterfaceStyle",
+      "type": "string",
+      "value": "Dark"
+    },
+    {
+      "domain": "NSGlobalDomain",
+      "key": "com.apple.swipescrolldirection",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "domain": "com.apple.dock",
+      "key": "autohide",
+      "type": "bool",
+      "value": true
+    },
+    {
+      "domain": "com.apple.dock",
+      "key": "tilesize",
+      "type": "float",
+      "value": 62.0
+    },
+    {
+      "domain": "com.apple.dock",
+      "key": "show-recents",
+      "type": "bool",
+      "value": false
+    }
+  ]
+}

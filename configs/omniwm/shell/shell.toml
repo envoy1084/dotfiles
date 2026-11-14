@@ -1,0 +1,21 @@
+profile = "default"
+
+[profiles]
+
+[profiles.default]
+center = []
+leading = ["workspaces", "scratchpads"]
+theme = "tokyo-night"
+trailing = ["system-stats"]
+
+[profiles.default.widgets]
+
+[profiles.default.widgets.active-window]
+display = "icon_only"
+
+[profiles.default.workspaceBar]
+fullWidth = false
+hoverPreviewsEnabled = false
+position = "overlappingMenuBar"
+reserveLayoutSpace = true
+windowLevel = "status"

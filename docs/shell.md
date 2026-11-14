@@ -25,6 +25,7 @@ Interactive zsh setup for Ghostty, with a compact two-line Starship prompt. The 
 - JetBrains Mono Nerd Font is configured in [Ghostty](ghostty.md).
 - History is shared between terminals, deduplicated, and limited to 50,000 saved entries. A leading space excludes a command from saved history.
 - Completion includes Homebrew tools, case-insensitive matching, and grouped menus.
+- Homebrew API metadata refresh interval is one day (`HOMEBREW_API_AUTO_UPDATE_SECS=86400`); `brew update` remains available for an explicit refresh.
 - Prompt/plugins load only in interactive terminals. Non-terminal agent commands keep plain output.
 - bat uses the terminal's ANSI palette; fzf uses Tokyo Night colours. Ctrl+T previews files and lists directories. File searches respect ignore files and exclude `.git`.
 

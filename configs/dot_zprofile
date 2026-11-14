@@ -6,6 +6,9 @@ elif [[ -x /usr/local/bin/brew ]]; then
     eval "$(/usr/local/bin/brew shellenv zsh)"
 fi
 
+# Refresh Homebrew's package catalogue at most once a day during normal use.
+export HOMEBREW_API_AUTO_UPDATE_SECS=86400
+
 # Standalone agent tools live here. Avoid duplicate PATH entries.
 typeset -U path PATH
 path=("$HOME/.local/bin" $path)

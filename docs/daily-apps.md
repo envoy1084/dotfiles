@@ -14,6 +14,7 @@
 | [Dropover](https://dropoverapp.com/) | Temporary drag-and-drop file shelves | `mas "Dropover", id: 1355679052` |
 | [Amphetamine](https://apps.apple.com/app/id937984704) | On-demand keep-awake sessions | `mas "Amphetamine", id: 937984704` |
 | [Cap](https://cap.so/) | Screen recording and sharing | `cask "cap"` |
+| [Figma](https://www.figma.com/downloads/) | Interface design and collaboration | `cask "figma"` |
 
 The Homebrew `telegram` cask selects Telegram for macOS. Shottr handles screenshots; Cap handles recordings. Existing login items, notifications and global shortcuts are preserved.
 
@@ -39,6 +40,7 @@ Homebrew records package choices rather than exact app versions. Casks can lag o
 ## First launch
 
 - Sign in to Slack, Discord and Telegram. Link Signal to Signal on your phone.
+- Sign in to Figma; account and workspace access remain per-Mac setup steps.
 - Grant Shottr and Cap screen capture permissions when requested; microphone/camera access depends on the recording features you enable.
 - Finish Dropover onboarding and choose any in-app licence upgrade yourself.
 - Start Amphetamine sessions when needed; login items and automatic triggers remain your choices.
@@ -59,6 +61,7 @@ Observed 2026-11-14 from the installed app bundles; these are not exact-version 
 | Dropover | 5.4.0 |
 | Amphetamine | 5.3.2 |
 | Cap | 0.6.2 |
+| Figma | 126.11.9 |
 
 ---
 

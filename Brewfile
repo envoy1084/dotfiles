@@ -63,6 +63,9 @@ cask "thaw@beta"
 cask "visual-studio-code"
 cask "vlc"
 
+# Design
+cask "figma"
+
 # Daily communication and capture apps
 cask "slack"
 cask "discord"

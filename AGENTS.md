@@ -14,6 +14,7 @@ This thread and repo are the ongoing native macOS productivity and agent setup. 
 - Local shell/Git overrides live outside Git in `~/.zprofile.local` and `~/.gitconfig.local`.
 - Keep paths portable; private chezmoi attributes mean filesystem permissions, not encryption.
 - Keep AeroSpace out unless explicitly requested again.
-- Read `docs/manual-steps.md` for remaining exports and sign-ins. Do not claim those are automated.
+- Read the README manual restore notes for remaining exports and sign-ins. Do not claim those are automated.
+- Keep `docs/` limited to the maintained `omniwm.md` reference. Put research, proposals, and scratch work in Git-ignored `research/`.
 - Git identity must come from user-provided or authenticated profile information, never invention. Do not create another remote or publish changes without user authorization.
-- The user explicitly deferred repository creation and GitHub CLI sign-in. Do not create a remote, push, or ask for an authentication token until the user resumes that work.
+- The user has configured the GitHub remote. GitHub CLI sign-in is still separate; do not request a token or push unless the user resumes that work.

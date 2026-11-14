@@ -4,7 +4,7 @@ Native macOS productivity and agent setup, maintained in `~/dotfiles`.
 
 Homebrew installs packages. Chezmoi owns configuration files. Git records changes. The setup wrapper previews changes unless `--write` is provided; it never uninstalls unrelated packages or automatically pushes configuration.
 
-The foundation is currently local-only. GitHub repository creation and GitHub CLI sign-in are deferred at the user's request. Doctor reports those as informational items; no remote has been created or pushed. After creating a private repo later, add its URL as `origin` and push `main`.
+The GitHub remote is configured. GitHub CLI sign-in remains separate; SSH authentication already works. Changes are committed locally and published deliberately.
 
 ## Daily commands
 
@@ -34,7 +34,7 @@ chezmoi add ~/.config/omniwm/settings.toml
 git diff
 git add .
 git commit -m "Update workspace configuration"
-# Once an origin remote is configured: git push
+# When ready to publish: git push
 ```
 
 `./setup capture` previews importing all already-managed configs; `./setup capture --write` imports them. Review the diff, particularly templates, before committing. It does not sweep arbitrary home files, app databases, or credentials into Git.
@@ -61,7 +61,7 @@ Selected macOS preferences are separate, so they are not silently changed during
 ./setup macos --write          # backup selected previous values, then apply
 ```
 
-No apps are automatically restarted. Some preference changes need a new login or restarting Dock. Finish the application permissions/sign-ins in [docs/manual-steps.md](docs/manual-steps.md).
+No apps are automatically restarted. Some preference changes need a new login or restarting Dock. Finish the application permissions/sign-ins below.
 
 ## Configuration layout
 
@@ -76,7 +76,7 @@ Managed configuration:
 - `configs/dot_gitconfig.tmpl`: Git identity from `configs/.chezmoidata.toml`.
 - `configs/.chezmoi.toml.tmpl`: machine-local chezmoi initialization; resolves the actual checkout path.
 
-The existing desktop choices are preserved: five scrolling/niri workspaces, Tokyo Night shell theme, and currently disabled clipboard history, IPC, and Quake terminal. Ghostty is still using its default template.
+The desktop uses five scrolling/niri workspaces, a Tokyo Night shell theme, right-Command/WASD shortcuts, and an enabled Ghostty Quake terminal. Clipboard history and IPC remain disabled. See [OmniWM shortcuts and settings](docs/omniwm.md).
 
 ## Machine-specific settings
 
@@ -90,7 +90,26 @@ Changing the shared identity in `configs/.chezmoidata.toml` changes the Git temp
 
 When adopting a tool, add its package declaration and useful config together. To manage another config, use `chezmoi add <specific-path>` and inspect the result. Changes to the desktop should be imported and committed deliberately. Do not enable automatic commit/push of every live app change.
 
-`state/observed.json` records the initial app versions and external installation channels. It is historical inventory, not a lockfile. Missing app exports and outside-Homebrew installs are documented separately; see the manual checklist.
+`state/observed.json` records the initial app versions and external installation channels. It is historical inventory, not a lockfile. See the manual restore notes below for missing app exports and outside-Homebrew installs.
+
+## Manual restore notes
+
+Grant OmniWM Accessibility and Input Monitoring permissions and Ghostty Accessibility for its global shortcut; see [OmniWM](docs/omniwm.md). Set login-item behavior intentionally. Finish Raycast, Thaw, and Superwhisper onboarding and permissions. Sign in separately to agents and services; credentials and conversation state stay outside dotfiles. Register a new SSH key on each Mac rather than restoring a private key from Git.
+
+Existing tools outside Homebrew need their original installation channels restored:
+
+| Tool | Observed version | Restore |
+|---|---|---|
+| Helium | 0.21.3.1 | Official distribution |
+| T3 Code (Beta) | 0.1.9 | Its existing distribution/update channel |
+| Codex CLI | 0.169.0 | Standalone installer; linked from `~/.local/bin` |
+| T3 CLI | 0.1.9 | T3-managed binary; linked from `~/.local/bin` |
+
+Portable application exports still to capture: Raycast preferences/extensions/shortcuts, Thaw layout, Superwhisper modes/model preferences, and adopted VS Code settings/keybindings/extensions. Use supported exports; avoid copying entire app databases. Run `./doctor` after restoring.
+
+## Research and scratch work
+
+Use `research/` for temporary notes, audits, proposals, and scratch files. Git ignores that folder. Keep `docs/` for the maintained `omniwm.md` reference.
 
 ## Recovery and privacy
 

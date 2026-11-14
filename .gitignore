@@ -19,3 +19,6 @@ id_*
 *.p12
 *.pfx
 *.key
+
+# Local research and scratch work
+/research/

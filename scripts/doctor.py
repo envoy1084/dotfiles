@@ -77,7 +77,7 @@ def main():
     report(run(["git", "rev-parse", "--verify", "HEAD"]).returncode == 0, "Git history exists")
     if run(["git", "status", "--porcelain"]).stdout.strip():
         print("INFO Uncommitted dotfiles changes; review and commit when ready.")
-    print("INFO App exports, permissions, and sign-ins: docs/manual-steps.md")
+    print("INFO App exports, permissions, and sign-ins: README.md (Manual restore notes)")
     return bool(failures)
 
 

@@ -92,7 +92,7 @@ Changing the shared identity in `configs/.chezmoidata.toml` changes the Git temp
 
 ## Packages and growth
 
-`Brewfile` declares chezmoi and GitHub CLI, nine shell/CLI tools, seven app casks, and JetBrains Mono Nerd Font. `./setup packages --write` installs with `--no-upgrade` and never invokes cleanup. Required dependencies may still be upgraded. A Brewfile records package selection, not exact historical binary versions.
+`Brewfile` declares chezmoi and GitHub CLI, nine shell/CLI tools, eight app casks (including VLC), and JetBrains Mono Nerd Font. `./setup packages --write` installs with `--no-upgrade` and never invokes cleanup. Required dependencies may still be upgraded. A Brewfile records package selection, not exact historical binary versions.
 
 When adopting a tool, add its package declaration and useful config together. To manage another config, use `chezmoi add <specific-path>` and inspect the result. Changes to the desktop should be imported and committed deliberately. Do not enable automatic commit/push of every live app change.
 

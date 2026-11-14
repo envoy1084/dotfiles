@@ -1,0 +1,40 @@
+[mgr]
+ratio = [1, 4, 3]
+sort_by = "natural"
+sort_dir_first = true
+linemode = "size"
+show_hidden = false
+scrolloff = 5
+
+[preview]
+max_width = 1200
+max_height = 1600
+image_quality = 75
+
+[opener]
+edit = [{ run = "code --wait %s", block = true, for = "macos" }]
+play = [{ run = "open -a VLC %s", orphan = true, for = "macos" }]
+macopen = [{ run = "open %s", orphan = true, for = "macos" }]
+
+[open]
+prepend_rules = [
+  { mime = "text/*", use = "edit" },
+  { mime = "application/json", use = "edit" },
+  { mime = "application/javascript", use = "edit" },
+  { mime = "application/xml", use = "edit" },
+  { url = "*.{toml,yaml,yml,js,ts,tsx,jsx,py,rs,go,sh,zsh}", use = "edit" },
+  { mime = "image/*", use = "macopen" },
+  { mime = "application/pdf", use = "macopen" },
+  { mime = "audio/*", use = "play" },
+  { mime = "video/*", use = "play" },
+]
+
+[[plugin.prepend_fetchers]]
+url = "*"
+run = "git"
+group = "git"
+
+[[plugin.prepend_fetchers]]
+url = "*/"
+run = "git"
+group = "git"

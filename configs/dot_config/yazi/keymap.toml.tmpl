@@ -1,0 +1,7 @@
+[mgr]
+prepend_keymap = [
+  { on = ["g", "d"], run = {{ printf "cd %q" (joinPath .chezmoi.homeDir "Downloads") | toJson }}, desc = "Downloads" },
+  { on = ["g", "D"], run = {{ printf "cd %q" (joinPath .chezmoi.homeDir "Documents") | toJson }}, desc = "Documents" },
+  { on = ["g", "p"], run = {{ printf "cd %q" (joinPath .chezmoi.homeDir "Projects") | toJson }}, desc = "Projects" },
+  { on = ["g", "."], run = {{ printf "cd %q" .chezmoi.workingTree | toJson }}, desc = "Dotfiles" },
+]

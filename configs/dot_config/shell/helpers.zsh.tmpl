@@ -1,0 +1,152 @@
+# Interactive helpers; loaded by .zshrc, never by non-interactive agent shells.
+typeset -g DOTFILES_ROOT={{ .chezmoi.workingTree | quote }}
+export PROJECTS_DIR="${PROJECTS_DIR:-$HOME/Projects}"
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ll='eza --long --all --header --group-directories-first --icons=auto --git'
+alias lt='eza --tree --level=2 --group-directories-first --icons=auto'
+alias lg='lazygit'
+alias gs='git status --short --branch'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gl='git log --graph --oneline --decorate -20'
+alias gstage='git add'
+alias gcommit='git commit -m'
+alias gnew='git switch -c'
+alias gpull='git pull --ff-only'
+alias gpush='git push'
+
+y() {
+    local cwd_file cwd_dir result
+    cwd_file=$(mktemp "${TMPDIR:-/tmp}/yazi-cwd.XXXXXXXX") || return
+    command yazi "$@" --cwd-file="$cwd_file"
+    result=$?
+    # Yazi's cwd file is NUL-terminated; also accept a plain path.
+    IFS= read -r -d '' cwd_dir < "$cwd_file"
+    command rm -f -- "$cwd_file"
+    if [[ -n $cwd_dir && -d $cwd_dir && $cwd_dir != "$PWD" ]]; then
+        builtin cd -- "$cwd_dir"
+    fi
+    return $result
+}
+
+take() {
+    (( $# == 1 )) || { print -u2 'Usage: take <directory>'; return 2; }
+    command mkdir -p -- "$1" && builtin cd -- "$1"
+}
+pack() {
+    (( $# >= 2 )) || { print -u2 'Usage: pack <archive.tar.gz|archive.zip> <paths...>'; return 2; }
+    local archive_name=$1
+    shift
+    command ouch compress -- "$@" "$archive_name"
+}
+unpack() {
+    (( $# >= 1 )) || { print -u2 'Usage: unpack <archives...>'; return 2; }
+    command ouch decompress -- "$@"
+}
+toss() {
+    (( $# )) || { print -u2 'Usage: toss <paths...> (moves to macOS Trash)'; return 2; }
+    local trash_bin="$_dotfiles_brew_prefix/opt/trash/bin/trash"
+    [[ -x $trash_bin ]] || { print -u2 'Install Homebrew trash first.'; return 1; }
+    "$trash_bin" -- "$@"
+}
+ports() { command lsof -nP -iTCP -sTCP:LISTEN; }
+lanip() {
+    local net_device ip_address
+    net_device=$(command route -n get default 2>/dev/null | command awk '/interface:/{print $2; exit}')
+    [[ -n $net_device ]] || { print -u2 'No default network interface.'; return 1; }
+    ip_address=$(command ipconfig getifaddr "$net_device" 2>/dev/null)
+    [[ -n $ip_address ]] || { print -u2 "No IPv4 address on $net_device."; return 1; }
+    print -r -- "$ip_address"
+}
+copyip() {
+    local ip_address
+    ip_address=$(lanip) || return
+    print -rn -- "$ip_address" | command pbcopy
+}
+copypath() {
+    (( $# <= 1 )) || { print -u2 'Usage: copypath [path]'; return 2; }
+    local absolute_name=${1:-$PWD}
+    print -rn -- "${absolute_name:A}" | command pbcopy
+}
+serve() {
+    (( $# <= 1 )) || { print -u2 'Usage: serve [port]'; return 2; }
+    local listen_port=${1:-8000}
+    [[ $listen_port == <1-65535> ]] || { print -u2 'Port must be between 1 and 65535.'; return 2; }
+    command python3 -m http.server "$listen_port" --bind 127.0.0.1
+}
+
+how() {
+    local topic=${1:-daily} doc_file
+    case $topic in
+        daily|aliases|shortcuts) doc_file=shell/daily.md ;;
+        y|yazi) doc_file=shell/yazi.md ;;
+        files|eza|dust|trash|toss|ouch|pack|unpack) doc_file=shell/files.md ;;
+        git|gs|gd|gds|gl|lg|lazygit|delta|wt|worktrunk|tokei) doc_file=shell/git.md ;;
+        work|tmux) doc_file=shell/tmux.md ;;
+        dev|mise|just|hyperfine|shfmt) doc_file=shell/development.md ;;
+        history|help|atuin|navi|tools|tldr|tealdeer|fzf-tab|zsh-completions) doc_file=shell/history-help.md ;;
+        data|fx|jq|yq) doc_file=shell/structured-data.md ;;
+        net|network|xh|doggo|gping|mtr|trip|trippy|rclone|ports|lanip|copyip) doc_file=shell/networking.md ;;
+        media|ffmpeg|magick|imagemagick|glow|chafa) doc_file=shell/media.md ;;
+        system|btop|fastfetch) doc_file=shell/system.md ;;
+        core|starship|fzf|z|zi|zoxide|rg|ripgrep|fd|bat|zsh-autosuggestions|zsh-syntax-highlighting) doc_file=shell/core.md ;;
+        config|configuration) doc_file=shell/configuration.md ;;
+        versions) doc_file=shell/versions.md ;;
+        ghostty|omniwm|index) doc_file="$topic.md" ;;
+        *) doc_file=$(command fd --type f --extension md . "$DOTFILES_ROOT/docs" | command fzf --query "$topic") || return ;;
+    esac
+    [[ $doc_file == /* ]] || doc_file="$DOTFILES_ROOT/docs/$doc_file"
+    [[ -f $doc_file ]] || { print -u2 "Guide not found: $doc_file"; return 1; }
+    if [[ -t 1 ]]; then command glow --pager "$doc_file"; else command cat -- "$doc_file"; fi
+}
+
+tools() {
+    local recipe
+    recipe=$(command navi --path "$HOME/.config/navi/cheats" --print --query "$*") || return
+    [[ -n $recipe ]] || return
+    if [[ -o interactive && -t 0 && -t 1 ]]; then print -z -- "$recipe"; else print -r -- "$recipe"; fi
+}
+_dotfiles_recipe_widget() {
+    local recipe
+    recipe=$(command navi --path "$HOME/.config/navi/cheats" --print --query "$LBUFFER") || { zle reset-prompt; return; }
+    if [[ -n $recipe ]]; then BUFFER=$recipe; CURSOR=${#BUFFER}; fi
+    zle reset-prompt
+}
+zle -N _dotfiles_recipe_widget
+bindkey '^G' _dotfiles_recipe_widget
+
+work() {
+    (( $# <= 1 )) || { print -u2 'Usage: work [project-name|directory]'; return 2; }
+    command mkdir -p -- "$PROJECTS_DIR" || return
+    local project_dir session_name existing_dir
+    if (( $# )); then
+        if [[ -d $1 ]]; then project_dir=$1
+        elif [[ $1 == dotfiles ]]; then project_dir=$DOTFILES_ROOT
+        elif [[ -d "$PROJECTS_DIR/$1" ]]; then project_dir="$PROJECTS_DIR/$1"
+        else print -u2 "Project not found: $1"; return 1
+        fi
+    else
+        project_dir=$({ print -r -- "$DOTFILES_ROOT"; command fd --type d --max-depth 1 --hidden --exclude .git . "$PROJECTS_DIR"; } | command fzf --prompt='Project > ') || return
+    fi
+    project_dir=${project_dir:A}
+    session_name=$(print -rn -- "${project_dir:t}" | command tr -cs '[:alnum:]_-' '_')
+    session_name="work-${session_name:-project}"
+    if command tmux has-session -t "=$session_name" 2>/dev/null; then
+        existing_dir=$(command tmux show-option -qv -t "$session_name" @dotfiles_project)
+        if [[ $existing_dir != "$project_dir" ]]; then
+            session_name+="-$(print -rn -- "$project_dir" | command shasum | command cut -c1-8)"
+        fi
+    fi
+    if ! command tmux has-session -t "=$session_name" 2>/dev/null; then
+        command tmux new-session -d -s "$session_name" -n main -c "$project_dir" || return
+        command tmux set-option -t "$session_name" @dotfiles_project "$project_dir" || return
+        command tmux new-window -t "=$session_name" -n agent -c "$project_dir" || return
+        command tmux new-window -t "=$session_name" -n server -c "$project_dir" || return
+        command tmux select-window -t "=$session_name:1" || return
+    fi
+    if [[ -n $TMUX ]]; then command tmux switch-client -t "=$session_name"
+    else command tmux attach-session -t "=$session_name"
+    fi
+}

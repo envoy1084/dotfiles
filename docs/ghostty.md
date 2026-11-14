@@ -1,5 +1,7 @@
 # Ghostty
 
+[← Previous: OmniWM](omniwm.md) · [Docs index](index.md) · [Next: Shell guide →](shell/index.md)
+
 [Ghostty](https://ghostty.org/) is the terminal used for development and agents. References: [configuration](https://ghostty.org/docs/config), [options](https://ghostty.org/docs/config/reference), [shortcut actions](https://ghostty.org/docs/config/keybind/reference), [shell integration](https://ghostty.org/docs/features/shell-integration).
 
 ## Setup
@@ -100,3 +102,7 @@ Recorded 2026-11-14; installed versions, not package pins.
 | Ghostty | 1.4.0 |
 | JetBrains Mono Nerd Font Homebrew cask / Nerd Fonts release | 3.5.1 |
 | OmniWM | 0.8.0 |
+
+---
+
+[← Previous: OmniWM](omniwm.md) · [Docs index](index.md) · [Next: Shell guide →](shell/index.md)

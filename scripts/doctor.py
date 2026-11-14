@@ -39,8 +39,10 @@ def main():
     key_marker = re.compile(r"-----BEGIN (?:OPENSSH |RSA |EC |DSA |ENCRYPTED )?PRIVATE KEY-----")
     files = [(p, e) for p, e in state.items() if e["type"] == "file"]
     report(not any(forbidden.search(p) or key_marker.search(e.get("contents", "")) for p, e in files), "managed targets exclude keys, auth files, and databases")
-    shell_files = [ROOT / "configs/dot_zprofile", ROOT / "configs/dot_zshrc"]
-    syntax = [run(["/bin/zsh", "-n", str(path)]) for path in shell_files if path.exists()]
+    # Validate rendered helpers too, including files built from templates.
+    shell_files = [(p, e) for p, e in files if Path(p).name in (".zprofile", ".zshrc") or p.endswith(".zsh")]
+    syntax = [subprocess.run(["/bin/zsh", "-n"], input=e.get("contents", ""),
+                             capture_output=True, text=True) for _, e in shell_files]
     report(all(result.returncode == 0 for result in syntax), "shell configuration syntax valid")
     for result in syntax:
         if result.returncode:

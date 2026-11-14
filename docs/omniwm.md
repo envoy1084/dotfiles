@@ -1,5 +1,7 @@
 # OmniWM
 
+[← Previous: Mac setup documentation](index.md) · [Docs index](index.md) · [Next: Ghostty →](ghostty.md)
+
 [OmniWM](https://github.com/OmniNull/OmniWM) is the native macOS window manager used here with five scrolling **niri** workspaces. Upstream: [shortcuts](https://github.com/OmniNull/OmniWM/blob/v0.8.0/website/src/content/docs/guides/keyboard-shortcuts.md), [settings](https://github.com/OmniNull/OmniWM/blob/v0.8.0/website/src/content/docs/config/settings-reference.md).
 
 ## Modifier
@@ -88,3 +90,7 @@ Recorded 2026-11-14; these describe the configured machine, not pinned package v
 | Ghostty | 1.4.0 |
 | Helium | 0.21.3.1 |
 | T3 Code (Beta) | 0.1.9 |
+
+---
+
+[← Previous: Mac setup documentation](index.md) · [Docs index](index.md) · [Next: Ghostty →](ghostty.md)

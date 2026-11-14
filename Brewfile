@@ -45,6 +45,13 @@ brew "chafa"
 brew "btop"
 brew "fastfetch"
 
+# Preview and completion helpers
+brew "poppler"
+brew "sevenzip"
+brew "resvg"
+brew "zsh-completions"
+brew "fzf-tab"
+
 cask "claude-code"
 cask "font-jetbrains-mono-nerd-font"
 cask "ghostty"

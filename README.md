@@ -6,6 +6,8 @@ Homebrew installs packages. Chezmoi owns configuration files. Git records change
 
 The GitHub remote is configured. GitHub CLI sign-in remains separate; SSH authentication already works. Changes are committed locally and published deliberately.
 
+Browse the [documentation index](docs/index.md) for app shortcuts and the shell guides.
+
 ## Daily commands
 
 ```sh
@@ -75,14 +77,16 @@ Managed configuration:
 - `configs/dot_zshrc`: terminal-only interactive shell, completion, history, and plugin setup.
 - `configs/dot_config/starship.toml` and `configs/dot_config/bat/config`: prompt and file previews.
 - `configs/private_dot_ssh/private_config`: GitHub client options, no keys.
-- `configs/dot_gitconfig.tmpl`: Git identity from `configs/.chezmoidata.toml`.
+- `configs/dot_gitconfig.tmpl`: Git identity from `configs/.chezmoidata.toml` and delta pager.
+- `configs/dot_config/{shell,yazi,navi,lazygit}/`, `configs/private_dot_atuin/` and `configs/dot_tmux.conf`: daily helpers, file manager, local history/recipes, Git UI and terminal sessions.
+- `configs/.chezmoiexternal.toml`: immutable official Yazi Git plugin source.
 - `configs/.chezmoi.toml.tmpl`: machine-local chezmoi initialization; resolves the actual checkout path.
 
 The desktop uses five scrolling/niri workspaces, a Tokyo Night shell theme, right-Command/WASD shortcuts, and an enabled Ghostty Quake terminal. Clipboard history and IPC remain disabled. See [OmniWM shortcuts and settings](docs/omniwm.md).
 
 Ghostty uses JetBrains Mono Nerd Font, TokyoNight Night, and local shortcuts that complement OmniWM. See [Ghostty shortcuts and settings](docs/ghostty.md).
 
-The shell uses a compact Pure-style Starship prompt in Tokyo Night colours, fuzzy history/file search, autosuggestions, syntax highlighting, and zoxide navigation. The installed terminal toolkit also covers files, Git, sessions, development, networking, media, and monitoring. See [shell tools and shortcuts](docs/shell.md).
+The shell uses a compact Pure-style Starship prompt in Tokyo Night colours, local Atuin history, fuzzy file search/completion, autosuggestions, syntax highlighting, and zoxide navigation. The installed terminal toolkit also covers files, Git, sessions, development, networking, media, and monitoring. See [shell tools and shortcuts](docs/shell/index.md).
 
 ## Machine-specific settings
 
@@ -92,7 +96,7 @@ Changing the shared identity in `configs/.chezmoidata.toml` changes the Git temp
 
 ## Packages and growth
 
-`Brewfile` declares chezmoi and GitHub CLI, 40 shell/CLI tools, eight app casks (including VLC), and JetBrains Mono Nerd Font. `./setup packages --write` installs with `--no-upgrade` and never invokes cleanup. Required dependencies may still be upgraded. A Brewfile records package selection, not exact historical binary versions.
+`Brewfile` declares chezmoi and GitHub CLI, 45 shell/CLI tools, eight app casks (including VLC), and JetBrains Mono Nerd Font. `./setup packages --write` installs with `--no-upgrade` and never invokes cleanup. Required dependencies may still be upgraded. A Brewfile records package selection, not exact historical binary versions.
 
 When adopting a tool, add its package declaration and useful config together. To manage another config, use `chezmoi add <specific-path>` and inspect the result. Changes to the desktop should be imported and committed deliberately. Do not enable automatic commit/push of every live app change.
 
@@ -115,7 +119,7 @@ Portable application exports still to capture: Raycast preferences/extensions/sh
 
 ## Research and scratch work
 
-Use `research/` for temporary notes, audits, proposals, and scratch files. Git ignores that folder. Keep `docs/` for concise, maintained references such as `omniwm.md`, `ghostty.md`, and `shell.md`.
+Use `research/` for temporary notes, audits, proposals, and scratch files. Git ignores that folder. Keep `docs/` for concise, maintained references such as `omniwm.md`, `ghostty.md`, and the category guides in `shell/`.
 
 ## Recovery and privacy
 

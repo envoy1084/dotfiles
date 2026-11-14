@@ -1,0 +1,8 @@
+# Official Yazi Git plugin, pinned to an immutable upstream commit.
+[".config/yazi/plugins/git.yazi/main.lua"]
+type = "file"
+url = "https://raw.githubusercontent.com/yazi-rs/plugins/1ef5fe02a6122f8f3bb47a41056aab3f4b8598bf/git.yazi/main.lua"
+
+[".config/yazi/plugins/git.yazi/LICENSE"]
+type = "file"
+url = "https://raw.githubusercontent.com/yazi-rs/plugins/1ef5fe02a6122f8f3bb47a41056aab3f4b8598bf/git.yazi/LICENSE"

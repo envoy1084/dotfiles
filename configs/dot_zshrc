@@ -15,7 +15,7 @@ fi
 typeset -U path fpath
 if [[ -n $_dotfiles_brew_prefix ]]; then
     path=("$_dotfiles_brew_prefix/bin" "$_dotfiles_brew_prefix/sbin" $path)
-    fpath=("$_dotfiles_brew_prefix/share/zsh/site-functions" $fpath)
+    fpath=("$_dotfiles_brew_prefix/share/zsh-completions" "$_dotfiles_brew_prefix/share/zsh/site-functions" $fpath)
 fi
 
 # Local history, shared between terminals. A leading space skips saved history.
@@ -31,8 +31,9 @@ setopt AUTO_PUSHD PUSHD_IGNORE_DUPS PUSHD_SILENT INTERACTIVE_COMMENTS NO_BEEP
 typeset -g _dotfiles_zsh_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 mkdir -p "$_dotfiles_zsh_cache"
 autoload -Uz compinit
-compinit -d "$_dotfiles_zsh_cache/zcompdump-$ZSH_VERSION"
-zstyle ':completion:*' menu select
+# Skip insecure completion directories rather than blocking startup on a question.
+compinit -i -d "$_dotfiles_zsh_cache/zcompdump-$ZSH_VERSION"
+zstyle ':completion:*' menu no
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*:descriptions' format '%F{blue}%d%f'
@@ -73,6 +74,10 @@ if (( $+commands[fzf] )); then
     fi
     # Use zoxide's zi for directory selection; leave Option+C available.
     export FZF_ALT_C_COMMAND=''
+    # Atuin owns Ctrl+R; keep fzf's file picker on Ctrl+T.
+    if (( $+commands[atuin] )); then
+        export FZF_CTRL_R_COMMAND=''
+    fi
     source <(fzf --zsh)
 fi
 
@@ -80,13 +85,22 @@ if (( $+commands[zoxide] )); then
     eval "$(zoxide init zsh)"
 fi
 
-# Small interactive conveniences; standard commands keep their usual meaning.
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ll='ls -lah'
-alias gs='git status --short --branch'
-alias gd='git diff'
-alias gl='git log --oneline --decorate -15'
+(( ! $+commands[mise] )) || eval "$(mise activate zsh)"
+(( ! $+commands[wt] )) || eval "$(wt config shell init zsh)"
+
+[[ ! -f "$HOME/.config/shell/helpers.zsh" ]] || source "$HOME/.config/shell/helpers.zsh"
+
+# One Tab owner: native completion supplies candidates, fzf-tab selects them.
+bindkey '^I' expand-or-complete
+if [[ -f "$_dotfiles_brew_prefix/share/fzf-tab/fzf-tab.zsh" ]]; then
+    zstyle ':fzf-tab:*' use-fzf-default-opts yes
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --all --icons --color=always -- "$realpath"'
+    source "$_dotfiles_brew_prefix/share/fzf-tab/fzf-tab.zsh"
+fi
+
+if (( $+commands[atuin] )); then
+    eval "$(atuin init zsh --disable-up-arrow --disable-ai)"
+fi
 
 # Work/machine-specific interactive additions stay outside Git.
 [[ ! -f "$HOME/.zshrc.local" ]] || source "$HOME/.zshrc.local"

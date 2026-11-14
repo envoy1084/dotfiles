@@ -15,6 +15,6 @@ This thread and repo are the ongoing native macOS productivity and agent setup. 
 - Keep paths portable; private chezmoi attributes mean filesystem permissions, not encryption.
 - Keep AeroSpace out unless explicitly requested again.
 - Read the README manual restore notes for remaining exports and sign-ins. Do not claim those are automated.
-- Keep `docs/` limited to concise, maintained app references such as `omniwm.md` and `ghostty.md`. Put research, proposals, and scratch work in Git-ignored `research/`.
+- Keep maintained references in `docs/`; `docs/index.md` links every page, and shell category guides live under `docs/shell/`. Keep Previous / Docs index / Next navigation at the top and bottom of each page. Put research, proposals, and scratch work in Git-ignored `research/`.
 - Git identity must come from user-provided or authenticated profile information, never invention. Do not create another remote or publish changes without user authorization.
 - The user has configured the GitHub remote. GitHub CLI sign-in is still separate; do not request a token or push unless the user resumes that work.

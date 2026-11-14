@@ -1,0 +1,15 @@
+auto_sync = false
+update_check = false
+show_whats_new = false
+search_mode = "fuzzy"
+filter_mode = "global"
+style = "compact"
+inline_height = 16
+show_preview = true
+enter_accept = false
+secrets_filter = true
+history_filter = ['^ ']
+keymap_mode = "emacs"
+
+[daemon]
+enabled = false

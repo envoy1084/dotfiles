@@ -1,0 +1,76 @@
+% files, disk, archives
+
+# Find the biggest files and folders here
+dust -d 2 .
+
+# Browse files and return to the chosen directory
+y
+
+# Archive a folder (choose archive extension)
+ouch compress '<folder>' '<archive>'
+
+# Inspect archive contents before extracting
+ouch list '<archive>'
+
+# Extract an archive
+ouch decompress '<archive>'
+
+% git, projects
+
+# Review and stage Git changes visually
+lazygit
+
+# Review staged changes before committing
+git diff --staged
+
+# List project worktrees
+wt list
+
+# Count lines of code by language
+tokei .
+
+# Benchmark a command (runs it repeatedly)
+hyperfine '<benchmark_command>'
+
+% network, dns, http
+
+# See listening local TCP ports
+lsof -nP -iTCP -sTCP:LISTEN
+
+# Resolve a DNS name
+doggo '<hostname>'
+
+# Compare latency to two hosts
+gping '<hostname>' '<second_host>'
+
+# Trace the network path (may require sudo)
+mtr --report --report-cycles 10 '<hostname>'
+
+# Inspect an HTTP endpoint
+xh GET '<url>'
+
+# Preview a cloud copy without modifying the destination
+rclone copy '<source>' '<remote_path>' --dry-run --progress
+
+% media, image, video, audio
+
+# Inspect a media file
+ffprobe -hide_banner '<media_file>'
+
+# Extract audio without transcoding (use a compatible extension)
+ffmpeg -n -i '<media_file>' -vn -c:a copy '<audio_output>'
+
+# Trim a video quickly (keyframe-based stream copy)
+ffmpeg -n -ss '<start_time>' -i '<media_file>' -t '<duration>' -c copy '<video_output>'
+
+# Resize an image without enlarging it
+magick '<image_file>' -resize '1600x1600>' '<image_output>'
+
+# Convert an image to WebP
+magick '<image_file>' -quality 85 '<webp_output>'
+
+# View an image in the terminal
+chafa '<image_file>'
+
+# Read Markdown in the terminal
+glow --pager '<markdown_file>'

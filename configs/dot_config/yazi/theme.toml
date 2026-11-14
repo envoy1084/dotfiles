@@ -1,0 +1,31 @@
+[app]
+overall = { fg = "#c0caf5", bg = "#1a1b26" }
+[mgr]
+cwd = { fg = "#7dcfff" }
+border_style = { fg = "#565f89" }
+marker_copied = { fg = "#9ece6a", bg = "#9ece6a" }
+marker_cut = { fg = "#f7768e", bg = "#f7768e" }
+marker_selected = { fg = "#bb9af7", bg = "#bb9af7" }
+[indicator]
+parent = { reversed = true }
+current = { reversed = true }
+preview = { underline = true }
+[tabs]
+active = { fg = "#1a1b26", bg = "#7aa2f7", bold = true }
+inactive = { fg = "#565f89", bg = "#292e42" }
+[mode]
+normal_main = { fg = "#1a1b26", bg = "#7aa2f7", bold = true }
+normal_alt = { fg = "#7aa2f7", bg = "#292e42" }
+select_main = { fg = "#1a1b26", bg = "#bb9af7", bold = true }
+select_alt = { fg = "#bb9af7", bg = "#292e42" }
+unset_main = { fg = "#1a1b26", bg = "#f7768e", bold = true }
+unset_alt = { fg = "#f7768e", bg = "#292e42" }
+[which]
+mask = { bg = "#1a1b26" }
+cand = { fg = "#7dcfff" }
+rest = { fg = "#565f89" }
+desc = { fg = "#bb9af7" }
+[git]
+untracked = { fg = "#bb9af7" }
+unstaged = { fg = "#f7768e" }
+staged = { fg = "#9ece6a" }

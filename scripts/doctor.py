@@ -35,12 +35,16 @@ def main():
         print(dump.stderr.strip())
         return 1
     state = json.loads(dump.stdout)
-    forbidden = re.compile(r"(^|/)(id_(rsa|ed25519|ecdsa|dsa)(\.pub)?|auth\.json|credentials\.json|\.env)$|\.(sqlite|db)$")
+    forbidden = re.compile(r"(^|/)(id_(rsa|ed25519|ecdsa|dsa)(\.pub)?|auth\.json|credentials\.json|\.env)$|\.(sqlite|db)$|(^|/)\.zsh_(history|sessions)(/|$)|(^|/)\.zcompdump[^/]*$")
     key_marker = re.compile(r"-----BEGIN (?:OPENSSH |RSA |EC |DSA |ENCRYPTED )?PRIVATE KEY-----")
     files = [(p, e) for p, e in state.items() if e["type"] == "file"]
     report(not any(forbidden.search(p) or key_marker.search(e.get("contents", "")) for p, e in files), "managed targets exclude keys, auth files, and databases")
-    syntax = run(["/bin/zsh", "-n", str(ROOT / "configs/dot_zprofile")])
-    report(syntax.returncode == 0, "shell profile syntax valid")
+    shell_files = [ROOT / "configs/dot_zprofile", ROOT / "configs/dot_zshrc"]
+    syntax = [run(["/bin/zsh", "-n", str(path)]) for path in shell_files if path.exists()]
+    report(all(result.returncode == 0 for result in syntax), "shell configuration syntax valid")
+    for result in syntax:
+        if result.returncode:
+            print(result.stderr.strip())
     print("INFO {} managed config files".format(len(files)))
     if args.config_only:
         return bool(failures)

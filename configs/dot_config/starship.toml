@@ -1,0 +1,130 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Compact Pure-style layout with Tokyo Night colours and Nerd Font symbols.
+# Context on the first line; the second line stays available for input.
+palette = 'tokyo_night'
+add_newline = true
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$nodejs\
+$bun\
+$python\
+$rust\
+$golang\
+$cmd_duration\
+$jobs\
+$status\
+$line_break\
+$character"""
+
+[palettes.tokyo_night]
+blue = '#7aa2f7'
+purple = '#bb9af7'
+cyan = '#7dcfff'
+green = '#9ece6a'
+yellow = '#e0af68'
+red = '#f7768e'
+muted = '#565f89'
+
+[directory]
+style = 'bold blue'
+truncation_length = 3
+truncation_symbol = '…/'
+read_only = ' '
+read_only_style = 'red'
+
+[username]
+show_always = false
+style_user = 'yellow'
+style_root = 'bold red'
+format = '[$user]($style) '
+
+[hostname]
+ssh_only = true
+style = 'cyan'
+format = '[@$hostname]($style) '
+
+[git_branch]
+symbol = ' '
+style = 'purple'
+format = '[$symbol$branch]($style) '
+truncation_length = 30
+truncation_symbol = '…'
+
+[git_commit]
+style = 'purple'
+format = '[@$hash]($style) '
+commit_hash_length = 7
+only_detached = true
+
+[git_state]
+style = 'yellow'
+format = '[\($state( $progress_current/$progress_total)\)]($style) '
+
+[git_status]
+style = 'yellow'
+format = '([\[$all_status$ahead_behind\]]($style) )'
+conflicted = '=${count}'
+untracked = '?${count}'
+modified = '!${count}'
+staged = '+${count}'
+renamed = '»${count}'
+deleted = '✘${count}'
+stashed = '≡${count}'
+ahead = '⇡${count}'
+behind = '⇣${count}'
+diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+
+[nodejs]
+symbol = ' '
+style = 'green'
+format = '[$symbol($version)]($style) '
+
+[bun]
+symbol = ' '
+style = 'green'
+format = '[$symbol($version)]($style) '
+
+[python]
+symbol = ' '
+style = 'cyan'
+format = '[$symbol($version)( \($virtualenv\))]($style) '
+
+[rust]
+symbol = ' '
+style = 'red'
+format = '[$symbol($version)]($style) '
+
+[golang]
+symbol = ' '
+style = 'cyan'
+format = '[$symbol($version)]($style) '
+
+[cmd_duration]
+min_time = 2000
+style = 'yellow'
+format = '[$duration]($style) '
+
+[jobs]
+symbol = ' '
+style = 'cyan'
+symbol_threshold = 1
+number_threshold = 1
+format = '[$symbol$number]($style) '
+
+[status]
+disabled = false
+symbol = '✘'
+style = 'red'
+format = '[$symbol$status]($style) '
+
+[character]
+success_symbol = '[❯](bold green)'
+error_symbol = '[❯](bold red)'
+vimcmd_symbol = '[❮](bold purple)'

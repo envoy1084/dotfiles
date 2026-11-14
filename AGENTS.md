@@ -11,7 +11,7 @@ This thread and repo are the ongoing native macOS productivity and agent setup. 
 - Keep one owner per runtime and one clearly chosen app per overlapping desktop function.
 - No test framework or test scripts: the user explicitly removed them. Use check/doctor, syntax validation, dry runs, and disposable verification when needed.
 - Never copy SSH keys, tokens, auth files, app/browser databases, histories, or agent sessions into Git. Review diffs before pushing.
-- Local shell/Git overrides live outside Git in `~/.zprofile.local` and `~/.gitconfig.local`.
+- Local shell/Git overrides live outside Git in `~/.zprofile.local`, `~/.zshrc.local`, and `~/.gitconfig.local`.
 - Keep paths portable; private chezmoi attributes mean filesystem permissions, not encryption.
 - Keep AeroSpace out unless explicitly requested again.
 - Read the README manual restore notes for remaining exports and sign-ins. Do not claim those are automated.

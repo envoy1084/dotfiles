@@ -72,6 +72,8 @@ Managed configuration:
 - `configs/dot_config/omniwm/`: workspace settings, shell layout, wallpaper palette.
 - `configs/private_Library/Application Support/com.mitchellh.ghostty/`: Ghostty appearance, keyboard, notifications, and window restore settings.
 - `configs/dot_zprofile`: Homebrew environment, portable local-bin PATH, optional local overrides.
+- `configs/dot_zshrc`: terminal-only interactive shell, completion, history, and plugin setup.
+- `configs/dot_config/starship.toml` and `configs/dot_config/bat/config`: prompt and file previews.
 - `configs/private_dot_ssh/private_config`: GitHub client options, no keys.
 - `configs/dot_gitconfig.tmpl`: Git identity from `configs/.chezmoidata.toml`.
 - `configs/.chezmoi.toml.tmpl`: machine-local chezmoi initialization; resolves the actual checkout path.
@@ -80,15 +82,17 @@ The desktop uses five scrolling/niri workspaces, a Tokyo Night shell theme, righ
 
 Ghostty uses JetBrains Mono Nerd Font, TokyoNight Night, and local shortcuts that complement OmniWM. See [Ghostty shortcuts and settings](docs/ghostty.md).
 
+The shell uses a compact Pure-style Starship prompt in Tokyo Night colours, fuzzy history/file search, autosuggestions, syntax highlighting, and zoxide navigation. See [shell tools and shortcuts](docs/shell.md).
+
 ## Machine-specific settings
 
-Keep local shell additions in `~/.zprofile.local` and machine/work-specific Git overrides in `~/.gitconfig.local`. Both are read by managed config and stay outside Git. Future host-specific templates should be added only when there is an actual difference to support.
+Keep local environment additions in `~/.zprofile.local`, interactive customisations in `~/.zshrc.local`, and machine/work-specific Git overrides in `~/.gitconfig.local`. These are read by managed config and stay outside Git. Future host-specific templates should be added only when there is an actual difference to support.
 
 Changing the shared identity in `configs/.chezmoidata.toml` changes the Git template. Per-repository Git config still takes precedence; the initial dotfiles repo has a local identity established from the authenticated GitHub profile.
 
 ## Packages and growth
 
-`Brewfile` declares chezmoi and GitHub CLI, seven app casks, and JetBrains Mono Nerd Font. `./setup packages --write` installs with `--no-upgrade` and never invokes cleanup. Required dependencies may still be upgraded. A Brewfile records package selection, not exact historical binary versions.
+`Brewfile` declares chezmoi and GitHub CLI, nine shell/CLI tools, seven app casks, and JetBrains Mono Nerd Font. `./setup packages --write` installs with `--no-upgrade` and never invokes cleanup. Required dependencies may still be upgraded. A Brewfile records package selection, not exact historical binary versions.
 
 When adopting a tool, add its package declaration and useful config together. To manage another config, use `chezmoi add <specific-path>` and inspect the result. Changes to the desktop should be imported and committed deliberately. Do not enable automatic commit/push of every live app change.
 
@@ -111,11 +115,11 @@ Portable application exports still to capture: Raycast preferences/extensions/sh
 
 ## Research and scratch work
 
-Use `research/` for temporary notes, audits, proposals, and scratch files. Git ignores that folder. Keep `docs/` for concise, maintained app references such as `omniwm.md` and `ghostty.md`.
+Use `research/` for temporary notes, audits, proposals, and scratch files. Git ignores that folder. Keep `docs/` for concise, maintained references such as `omniwm.md`, `ghostty.md`, and `shell.md`.
 
 ## Recovery and privacy
 
-The baseline commit preserves the pre-chezmoi setup. Review `git log` and a proposed `chezmoi diff` when rolling back to an older configuration. The initial migration and wrapper applies keep backups under `~/Library/Application Support/dotfiles/backups/`, outside Git.
+The baseline commit preserves the pre-chezmoi setup. Review `git log` and a proposed `chezmoi diff` when rolling back to an older configuration. Setup-time file backups were cleared at the user's request on 2026-11-14. Future wrapper applies can create new recovery copies under `~/Library/Application Support/dotfiles/backups/`, outside Git. A backup of the completed Mac setup is deferred until setup is finished.
 
 Keep SSH keys, tokens, Keychain material, browser/app databases, and agent conversations out of this repository. Doctor checks obvious forbidden target names and private-key content, but it is not a comprehensive secret scanner; review every diff before pushing, including to a private repo.
 

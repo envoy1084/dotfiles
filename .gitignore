@@ -22,3 +22,8 @@ id_*
 
 # Local research and scratch work
 /research/
+
+# Interactive shell state stays on the machine.
+.zsh_history
+.zsh_sessions/
+.zcompdump*

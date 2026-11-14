@@ -1,0 +1,4 @@
+# Use the terminal's Tokyo Night ANSI palette.
+--theme=ansi
+--style=numbers,changes,header
+--paging=auto

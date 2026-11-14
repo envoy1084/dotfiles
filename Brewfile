@@ -2,6 +2,15 @@
 # This is not an exact-version lock or a full machine restore.
 brew "chezmoi"
 brew "gh"
+brew "starship"
+brew "fzf"
+brew "zoxide"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+brew "ripgrep"
+brew "fd"
+brew "bat"
+brew "jq"
 
 cask "claude-code"
 cask "font-jetbrains-mono-nerd-font"

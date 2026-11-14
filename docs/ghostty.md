@@ -1,6 +1,6 @@
 # Ghostty
 
-[← Previous: OmniWM](omniwm.md) · [Docs index](index.md) · [Next: Shell guide →](shell/index.md)
+[← Previous: OmniWM](omniwm.md) · [Docs index](index.md) · [Next: VS Code →](vscode.md)
 
 [Ghostty](https://ghostty.org/) is the terminal used for development and agents. References: [configuration](https://ghostty.org/docs/config), [options](https://ghostty.org/docs/config/reference), [shortcut actions](https://ghostty.org/docs/config/keybind/reference), [shell integration](https://ghostty.org/docs/features/shell-integration).
 
@@ -105,4 +105,4 @@ Recorded 2026-11-14; installed versions, not package pins.
 
 ---
 
-[← Previous: OmniWM](omniwm.md) · [Docs index](index.md) · [Next: Shell guide →](shell/index.md)
+[← Previous: OmniWM](omniwm.md) · [Docs index](index.md) · [Next: VS Code →](vscode.md)

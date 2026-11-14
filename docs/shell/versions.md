@@ -55,6 +55,19 @@ Recorded 2026-11-14; installed package versions, not pins. Use `brew list --vers
 
 Yazi Git plugin is pinned to commit `1ef5fe02a6122f8f3bb47a41056aab3f4b8598bf`. App versions are recorded in the [Ghostty](../ghostty.md) and [OmniWM](../omniwm.md) references.
 
+## mise runtime defaults
+
+Captured 2026-11-14 in `configs/dot_config/mise/config.toml`; these versions are pinned independently of Homebrew.
+
+| Runtime/tool | Version |
+|---|---|
+| Node.js | 26.13.1 |
+| pnpm | 12.18.0 |
+| Go | 1.27.4 |
+| Rust | 1.100.0 |
+
+Rust components include rustfmt, Clippy and rust-src. The initial default-profile install also includes offline rust-docs. Rust projects' `rust-toolchain.toml` files are enabled as version sources. Update this observed table when capturing a new runtime selection.
+
 ---
 
 [← Previous: Configuration and restore](configuration.md) · [Docs index](../index.md) · [Next: Mac setup documentation →](../index.md)

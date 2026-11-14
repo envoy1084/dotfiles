@@ -94,7 +94,7 @@ how() {
         core|starship|fzf|z|zi|zoxide|rg|ripgrep|fd|bat|zsh-autosuggestions|zsh-syntax-highlighting) doc_file=shell/core.md ;;
         config|configuration) doc_file=shell/configuration.md ;;
         versions) doc_file=shell/versions.md ;;
-        ghostty|omniwm|index) doc_file="$topic.md" ;;
+        ghostty|omniwm|vscode|index) doc_file="$topic.md" ;;
         *) doc_file=$(command fd --type f --extension md . "$DOTFILES_ROOT/docs" | command fzf --query "$topic") || return ;;
     esac
     [[ $doc_file == /* ]] || doc_file="$DOTFILES_ROOT/docs/$doc_file"

@@ -3,9 +3,10 @@ set -eu
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 case "${1:---dry-run}" in
     --dry-run)
-        echo 'Bootstrap preview: install packages, initialize chezmoi, apply configs, run doctor.'
+        echo 'Bootstrap preview: install packages, initialize chezmoi, apply configs, restore runtimes and VS Code extensions, run doctor.'
         "$ROOT/setup" packages
-        echo 'Then: ./setup init --write && ./setup apply --write && ./doctor'
+        echo 'Then: ./setup init --write && ./setup apply --write'
+        echo 'Then: ./setup runtimes --write && ./setup vscode --write && ./doctor'
         echo 'macOS preferences are a separate optional step: ./setup macos --write' ;;
     --write)
         [ "$(uname -s)" = Darwin ] || { echo 'This bootstrap is for macOS.' >&2; exit 1; }
@@ -18,6 +19,8 @@ case "${1:---dry-run}" in
         "$ROOT/setup" packages --write
         "$ROOT/setup" init --write
         "$ROOT/setup" apply --write
+        "$ROOT/setup" runtimes --write
+        "$ROOT/setup" vscode --write
         "$ROOT/doctor" ;;
     *) echo 'Usage: ./bootstrap [--dry-run|--write]' >&2; exit 2 ;;
 esac

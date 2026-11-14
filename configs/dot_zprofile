@@ -14,5 +14,11 @@ typeset -U path PATH
 path=("$HOME/.local/bin" $path)
 export PATH
 
+# Stable runtime paths for login shells started by editors and coding agents.
+# Interactive terminals additionally use full activation in .zshrc.
+if command -v mise >/dev/null 2>&1; then
+    eval "$(mise activate zsh --shims)"
+fi
+
 # Machine-specific exports stay outside Git.
 [[ ! -f "$HOME/.zprofile.local" ]] || source "$HOME/.zprofile.local"

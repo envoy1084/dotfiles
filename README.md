@@ -4,7 +4,7 @@ Native macOS productivity and agent setup, maintained in `~/dotfiles`.
 
 Homebrew installs packages. Chezmoi owns configuration files. Git records changes. The setup wrapper previews changes unless `--write` is provided; it never uninstalls unrelated packages or automatically pushes configuration.
 
-The GitHub remote is configured. GitHub CLI sign-in remains separate; SSH authentication already works. Changes are committed locally and published deliberately.
+The GitHub remote, SSH authentication and GitHub CLI authentication are configured on this Mac. Sign-in and SSH keys must be established separately on a new Mac. Changes are committed locally and published deliberately.
 
 Browse the [documentation index](docs/index.md) for app shortcuts and the shell guides.
 
@@ -39,6 +39,15 @@ git commit -m "Update workspace configuration"
 # When ready to publish: git push
 ```
 
+On this configured Mac, the current app configuration is the source of truth for your preferences. During maintenance, capture observed OmniWM/Ghostty/VS Code changes before applying other dotfiles work; keep the docs aligned. On a new Mac, the saved repo configuration supplies the initial settings. This is a maintenance rule; it does not run a background sync service.
+
+VS Code settings, tasks, keybindings when present, snippets and extension choices can be captured together:
+
+```sh
+./setup vscode --capture                # preview
+./setup vscode --write --capture        # capture your current preferences
+```
+
 `./setup capture` previews importing all already-managed configs; `./setup capture --write` imports them. Review the diff, particularly templates, before committing. It does not sweep arbitrary home files, app databases, or credentials into Git.
 
 ## New Mac
@@ -54,7 +63,7 @@ cd ~/dotfiles
 ./bootstrap --write
 ```
 
-Bootstrap installs the Brewfile packages, initializes chezmoi against this checkout, applies the managed config, then runs doctor. It requires macOS and Command Line Tools, and can find Homebrew in the usual Apple Silicon/Intel locations. If a prerequisite is missing it prints the next step and exits.
+Bootstrap installs the Brewfile packages, initializes chezmoi against this checkout, applies the managed config, installs the captured mise tools, restores missing VS Code extensions, then runs doctor. Runtime installation runs from your home directory so unrelated project configs cannot join the restore. It requires macOS and Command Line Tools, and can find Homebrew in the usual Apple Silicon/Intel locations. If a prerequisite is missing it prints the next step and exits.
 
 Selected macOS preferences are separate, so they are not silently changed during a config restore:
 
@@ -80,11 +89,15 @@ Managed configuration:
 - `configs/dot_gitconfig.tmpl`: Git identity from `configs/.chezmoidata.toml` and delta pager.
 - `configs/dot_config/{shell,yazi,navi,lazygit}/`, `configs/private_dot_atuin/` and `configs/dot_tmux.conf`: daily helpers, file manager, local history/recipes, Git UI and terminal sessions.
 - `configs/.chezmoiexternal.toml`: immutable official Yazi Git plugin source.
+- `configs/dot_config/mise/config.toml`: personal runtime/tool versions and Rust settings; restored by `./setup runtimes --write`.
+- `configs/private_Library/Application Support/Code/User/`: VS Code settings, user tasks and snippets; extension versions are in `configs/dot_config/vscode/extensions.txt`.
 - `configs/.chezmoi.toml.tmpl`: machine-local chezmoi initialization; resolves the actual checkout path.
 
 The desktop uses five scrolling/niri workspaces, a Tokyo Night shell theme, right-Command/WASD shortcuts, and an enabled Ghostty Quake terminal. Clipboard history and IPC remain disabled. See [OmniWM shortcuts and settings](docs/omniwm.md).
 
 Ghostty uses JetBrains Mono Nerd Font, TokyoNight Night, and local shortcuts that complement OmniWM. See [Ghostty shortcuts and settings](docs/ghostty.md).
+
+VS Code preserves your EnvoyOS theme, existing extensions/formatters and snippets, with JetBrains Mono Nerd Font for editor and terminal. See [VS Code configuration and restore](docs/vscode.md).
 
 The shell uses a compact Pure-style Starship prompt in Tokyo Night colours, local Atuin history, fuzzy file search/completion, autosuggestions, syntax highlighting, and zoxide navigation. The installed terminal toolkit also covers files, Git, sessions, development, networking, media, and monitoring. See [shell tools and shortcuts](docs/shell/index.md).
 
@@ -99,6 +112,8 @@ Changing the shared identity in `configs/.chezmoidata.toml` changes the Git temp
 `Brewfile` declares chezmoi and GitHub CLI, 45 shell/CLI tools, eight app casks (including VLC), and JetBrains Mono Nerd Font. `./setup packages --write` installs with `--no-upgrade` and never invokes cleanup. Required dependencies may still be upgraded. A Brewfile records package selection, not exact historical binary versions.
 
 When adopting a tool, add its package declaration and useful config together. To manage another config, use `chezmoi add <specific-path>` and inspect the result. Changes to the desktop should be imported and committed deliberately. Do not enable automatic commit/push of every live app change.
+
+Homebrew owns mise; mise owns Node, pnpm, Rust, Go and other adopted developer runtimes/tools. After changing a global runtime selection, let the installer finish, then capture `~/.config/mise/config.toml`. `./setup runtimes` previews missing tools; `./setup runtimes --write` installs and rebuilds shims. Project-specific versions stay in the project repository. Agent login shells and editors discover tools through mise shims; launchers with a separate environment can use `mise exec -- <command>`.
 
 `state/observed.json` records the initial app versions and external installation channels. It is historical inventory, not a lockfile. See the manual restore notes below for missing app exports and outside-Homebrew installs.
 
@@ -115,7 +130,7 @@ Existing tools outside Homebrew need their original installation channels restor
 | Codex CLI | 0.169.0 | Standalone installer; linked from `~/.local/bin` |
 | T3 CLI | 0.1.9 | T3-managed binary; linked from `~/.local/bin` |
 
-Portable application exports still to capture: Raycast preferences/extensions/shortcuts, Thaw layout, Superwhisper modes/model preferences, and adopted VS Code settings/keybindings/extensions. Use supported exports; avoid copying entire app databases. Run `./doctor` after restoring.
+Portable application exports still to capture: Raycast preferences/extensions/shortcuts, Thaw layout, and Superwhisper modes/model preferences. VS Code settings, user tasks, four snippet files and 32 extension versions are captured; custom user keybindings were absent. VS Code sign-in/Settings Sync and extension credentials remain separate. Use supported exports; avoid copying entire app databases. Run `./doctor` after restoring.
 
 ## Research and scratch work
 

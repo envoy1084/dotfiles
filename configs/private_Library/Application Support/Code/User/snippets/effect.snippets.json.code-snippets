@@ -1,0 +1,269 @@
+{
+  "Effect.gen Loop": {
+    "prefix": "efgen",
+    "body": [
+      "Effect.gen(function* () {",
+      "\t$0",
+      "})"
+    ],
+    "description": "Basic Effect.gen generator block"
+  },
+  "Effect.gen (Exported Constant)": {
+    "prefix": "efgenc",
+    "body": [
+      "export const ${1:program} = Effect.gen(function* () {",
+      "\t$0",
+      "});"
+    ],
+    "description": "Exported constant containing an Effect.gen block"
+  },
+  "Effect.tryPromise (Async/Await Interop)": {
+    "prefix": "eftry",
+    "body": [
+      "Effect.tryPromise({",
+      "\ttry: () => ${1:functionCall()},",
+      "\tcatch: (unknown) => new ${2:ErrorType}({ cause: unknown })",
+      "})"
+    ],
+    "description": "Wraps a Promise with strict error handling using tryPromise"
+  },
+  "Effect.promise (Simple Async)": {
+    "prefix": "efprom",
+    "body": [
+      "Effect.promise(() => ${1:functionCall()})"
+    ],
+    "description": "Wraps a Promise that is assumed to not fail (or dies on failure)"
+  },
+  "Effect.fail": {
+    "prefix": "effail",
+    "body": [
+      "Effect.fail(new ${1:ErrorType}({ message: \"${2:Something went wrong}\" }))"
+    ],
+    "description": "Returns a failure Effect"
+  },
+  "Effect.succeed": {
+    "prefix": "efsucc",
+    "body": [
+      "Effect.succeed(${1:value})"
+    ],
+    "description": "Returns a success Effect"
+  },
+  "Effect.service": {
+    "prefix": "efsvc",
+    "body": [
+      "const ${1:service} = yield* ${2:ServiceName};"
+    ],
+    "description": "Access a service from the context inside a generator"
+  },
+  "Effect.log": {
+    "prefix": "eflog",
+    "body": [
+      "yield* Effect.log(\"${1:Message}\");"
+    ],
+    "description": "Logs a message within an effect flow"
+  },
+  "Effect.logError": {
+    "prefix": "efloge",
+    "body": [
+      "yield* Effect.logError(\"${1:Error message}\");"
+    ],
+    "description": "Logs an error message within an effect flow"
+  },
+  "Effect.annotateLogs": {
+    "prefix": "efalog",
+    "body": [
+      "Effect.annotateLogs({ ${1:key}: \"${2:value}\" })"
+    ],
+    "description": "Adds context to all logs in the current scope"
+  },
+  "Effect.all (Parallel/Sequential)": {
+    "prefix": "efall",
+    "body": [
+      "yield* Effect.all([",
+      "\t${1:effect1},",
+      "\t${2:effect2}",
+      "], { concurrency: \"${3|unbounded,inherit|}\" });"
+    ],
+    "description": "Runs multiple effects, optionally in parallel"
+  },
+  "Effect.runPromise": {
+    "prefix": "efrun",
+    "body": [
+      "Effect.runPromise(${1:program})"
+    ],
+    "description": "Executes an effect and returns a Promise (usually at entry point)"
+  },
+  "Effect Match (Pattern Matching)": {
+    "prefix": "efmatch",
+    "body": [
+      "Effect.match({",
+      "\tonFailure: (error) => ${1:console.error(error)},",
+      "\tonSuccess: (value) => ${2:console.log(value)}",
+      "})"
+    ],
+    "description": "Handles both success and failure cases of an Effect"
+  },
+  "Effect.scoped (Resource Management)": {
+    "prefix": "efscope",
+    "body": [
+      "Effect.scoped(",
+      "\tEffect.gen(function* () {",
+      "\t\t$0",
+      "\t})",
+      ")"
+    ],
+    "description": "Creates a scope for resource management (closing handles, etc.)"
+  },
+  "Context Tag (Service Definition)": {
+    "prefix": "svtag",
+    "body": [
+      "export class ${1:ServiceName} extends Context.Tag(\"${1:ServiceName}\")<",
+      "\t${1:ServiceName},",
+      "\t${2:ServiceInterface}",
+      ">() {}"
+    ],
+    "description": "Defines a new Service Tag"
+  },
+  "Data.TaggedError": {
+    "prefix": "dterr",
+    "body": [
+      "export class ${1:ErrorName} extends Data.TaggedError(\"${1:ErrorName}\")<{",
+      "\tmessage: string;",
+      "\tcause?: unknown;",
+      "}> {}"
+    ],
+    "description": "Creates a standard Tagged Error class"
+  },
+  "Data.Class (Value Object)": {
+    "prefix": "dtclass",
+    "body": [
+      "class ${1:ClassName} extends Data.Class<{ ${2:prop}: ${3:string} }> {}"
+    ],
+    "description": "Creates a Data Class with value equality"
+  },
+  "Schema Struct": {
+    "prefix": "scstruct",
+    "body": [
+      "export const ${1:Name}Schema = Schema.Struct({",
+      "\t${2:field}: Schema.${3:String},",
+      "});",
+      "export interface ${1:Name} extends Schema.Schema.Type<typeof ${1:Name}Schema> {}"
+    ],
+    "description": "Defines a Schema Struct and extracts the TypeScript interface"
+  },
+  "Schema Decode": {
+    "prefix": "scdec",
+    "body": [
+      "Schema.decodeUnknownEither(${1:SchemaName})(${2:data})"
+    ],
+    "description": "Decodes unknown data using a Schema, returning an Either"
+  },
+  "Schema Parse (Effect)": {
+    "prefix": "scparse",
+    "body": [
+      "Schema.decodeUnknown(${1:SchemaName})(${2:data})"
+    ],
+    "description": "Decodes unknown data using a Schema, returning an Effect"
+  },
+  "Layer.effect": {
+    "prefix": "lyeff",
+    "body": [
+      "export const ${1:LayerName}Live = Layer.effect(",
+      "\t${2:ServiceTag},",
+      "\tEffect.gen(function* () {",
+      "\t\t$0",
+      "\t\treturn { method: () => {} };",
+      "\t})",
+      ");"
+    ],
+    "description": "Creates a Layer from an Effect (useful for async init)"
+  },
+  "Layer.succeed": {
+    "prefix": "lysuc",
+    "body": [
+      "export const ${1:LayerName}Test = Layer.succeed(",
+      "\t${2:ServiceTag},",
+      "\t${2:ServiceTag}.of({",
+      "\t\t$0",
+      "\t})",
+      ");"
+    ],
+    "description": "Creates a Layer from a static value (useful for testing/mocks)"
+  },
+  "Layer Provide": {
+    "prefix": "lyprov",
+    "body": [
+      "Effect.provide(${1:LayerName}Live)"
+    ],
+    "description": "Provides a Layer to an Effect"
+  },
+  "Config String": {
+    "prefix": "efconf",
+    "body": [
+      "Config.string(\"${1:ENV_VAR_NAME}\")"
+    ],
+    "description": "Reads a string configuration from the environment"
+  },
+  "Config Secret": {
+    "prefix": "efsec",
+    "body": [
+      "Config.secret(\"${1:API_KEY}\")"
+    ],
+    "description": "Reads a secret configuration (redacted in logs)"
+  },
+  "Pipe": {
+    "prefix": "efpipe",
+    "body": [
+      "${1:input}.pipe(",
+      "\t${2:operator1},",
+      "\t${3:operator2}",
+      ")"
+    ],
+    "description": "Pipes a value through multiple functions"
+  },
+  "Stream.make": {
+    "prefix": "stmake",
+    "body": [
+      "Stream.make(${1:item1}, ${2:item2})"
+    ],
+    "description": "Creates a simple stream of values"
+  },
+  "Stream.runCollect": {
+    "prefix": "strun",
+    "body": [
+      "Stream.runCollect"
+    ],
+    "description": "Runs a stream and collects all items into a Chunk"
+  },
+  "Match.value": {
+    "prefix": "mtval",
+    "body": [
+      "Match.value(${1:variable}).pipe(",
+      "\tMatch.when(${2:predicate}, () => ${3:result}),",
+      "\tMatch.orElse(() => ${4:default})",
+      ")"
+    ],
+    "description": "Pattern matching on a value"
+  },
+  "Console.log (Debug)": {
+    "prefix": "clog",
+    "body": [
+      "Console.log($0)"
+    ],
+    "description": "Effect's version of console.log"
+  },
+  "Schedule (Retry)": {
+    "prefix": "efsched",
+    "body": [
+      "Effect.retry({ schedule: Schedule.exponential(${1:1000}) })"
+    ],
+    "description": "Retries an effect with an exponential backoff schedule"
+  },
+  "Ref Make": {
+    "prefix": "efref",
+    "body": [
+      "yield* Ref.make(${1:initialValue})"
+    ],
+    "description": "Creates a mutable Reference (Ref)"
+  }
+}

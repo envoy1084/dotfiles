@@ -76,6 +76,7 @@ Left Command + Space remains available for Raycast. Use left Command + W / Q for
 - Ghostty shortcut: `configs/private_Library/Application Support/com.mitchellh.ghostty/config.ghostty`.
 - Preview with `./setup diff`; back up and apply with `./setup apply --write`.
 - After changing OmniWM through its UI, capture with `chezmoi add ~/.config/omniwm/settings.toml` and review `git diff`.
+- Current app settings are the source of truth on this Mac. Capture observed UI changes before applying other dotfiles work. The shell layout is also managed at `~/.config/omniwm/shell/shell.toml`; capture that specific file after changing shell widgets or the workspace bar.
 - Keep all five workspaces on niri. Clipboard history and IPC remain disabled.
 - Shell style: Celestial 1.1.0 from `github:OmniNull/OmniWM@v0.8.0`, profile `default`, Tokyo Night theme. Reinstall the style through OmniWM on a new Mac; generated widget code/fonts are outside this repo.
 - Helium and T3 Code currently need separate installation; see the README restore notes.

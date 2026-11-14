@@ -16,7 +16,7 @@ mise use --pin node@lts
 mise exec -- node --version
 ```
 
-Shell activation is enabled. No global runtimes are selected. Choose versions per project with `mise use`, review its `mise.toml`, and commit that project file alongside its code.
+Personal Node, pnpm, Go and Rust defaults belong in the captured global mise config. Homebrew installs mise; mise owns these runtimes. Login shells expose shims for editors/agents, and interactive shells activate mise. Choose versions per project with `mise use --pin`, review its `mise.toml`, and commit that file alongside the code. Rust projects can declare their toolchain and components in `rust-toolchain.toml`.
 
 ### just
 
@@ -69,7 +69,19 @@ mise current
 just --list                 # available tasks when the project has a justfile
 ```
 
-Choose a runtime when a project needs it. No global Node/Python version is selected by these dotfiles. Review a project's mise configuration before trusting it; project tasks and hooks can execute code. Hyperfine runs benchmark commands repeatedly, so benchmark commands should be suitable for repetition.
+Review a project's mise configuration before trusting it; project tasks and hooks can execute code. Hyperfine runs benchmark commands repeatedly, so benchmark commands should be suitable for repetition.
+
+## Predictable project commands
+
+This means keeping the commands to run a project in that project's own files, so people and agents can discover them. It does not require adding more global tools.
+
+| Project | Example entry points |
+|---|---|
+| TypeScript | `pnpm dev`, `pnpm build`, `pnpm check`, `pnpm test`, defined in `package.json` |
+| Rust | `cargo check`, `cargo test`, `cargo fmt`; an optional project `justfile` can group multiple checks |
+| Go | `go build ./...`, `go test ./...`, `go vet ./...` |
+
+Use the scripts and conventions the repository already has. When maintaining a project, document missing entry points and add a recipe only when it serves an actual workflow. No project repositories are modified as part of the Mac setup.
 
 ---
 

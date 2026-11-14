@@ -59,6 +59,35 @@ def main():
         wanted = re.findall(r'^(brew|cask) "([^"]+)"', (ROOT / "Brewfile").read_text(), re.M)
         missing = [name for kind, name in wanted if name not in (formulae if kind == "brew" else casks)]
         report(not missing, "Brewfile packages installed" + (": " + ", ".join(missing) if missing else ""))
+    if (ROOT / "configs/dot_config/mise/config.toml").exists():
+        report(bool(shutil.which("mise")), "mise available")
+        if shutil.which("mise"):
+            installed = run(["mise", "--cd", str(Path.home()), "ls", "--current", "--json"])
+            try:
+                tools = json.loads(installed.stdout)
+                missing = [name for name, versions in tools.items()
+                           if any(not entry.get("installed") for entry in versions)]
+                report(installed.returncode == 0 and bool(tools) and not missing,
+                       "mise default tools installed" + (": " + ", ".join(missing) if missing else ""))
+            except (ValueError, TypeError):
+                report(False, "mise default tools can be inspected")
+            # A login shell has shims without loading interactive prompt plugins.
+            login = run(["/bin/zsh", "-lc", "mise doctor"])
+            report(login.returncode == 0, "mise runtime access in login/agent shells")
+            if login.returncode:
+                print(login.stdout.strip())
+                print(login.stderr.strip())
+    manifest = ROOT / "configs/dot_config/vscode/extensions.txt"
+    if manifest.exists():
+        report(bool(shutil.which("code")), "VS Code CLI available")
+        if shutil.which("code"):
+            installed = run(["code", "--list-extensions"])
+            present = {line.strip().lower() for line in installed.stdout.splitlines()}
+            wanted = {line.strip().split("@", 1)[0].lower() for line in manifest.read_text().splitlines()
+                      if line.strip() and not line.lstrip().startswith("#")}
+            missing = sorted(wanted - present)
+            report(installed.returncode == 0 and not missing,
+                   "VS Code extensions installed" + (": " + ", ".join(missing) if missing else ""))
     status = run(["chezmoi", "--source", str(ROOT), "status"])
     report(status.returncode == 0 and not status.stdout.strip(), "live configuration matches source")
     if status.stdout.strip():

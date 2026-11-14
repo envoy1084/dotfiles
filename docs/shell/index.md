@@ -1,6 +1,6 @@
 # Shell guide
 
-[← Previous: Ghostty](../ghostty.md) · [Docs index](../index.md) · [Next: Daily commands →](daily.md)
+[← Previous: VS Code](../vscode.md) · [Docs index](../index.md) · [Next: Daily commands →](daily.md)
 
 Start with [Daily commands](daily.md). You only need a few entry points; the category pages keep the rest available when you need them.
 
@@ -32,4 +32,4 @@ Start with [Daily commands](daily.md). You only need a few entry points; the cat
 
 ---
 
-[← Previous: Ghostty](../ghostty.md) · [Docs index](../index.md) · [Next: Daily commands →](daily.md)
+[← Previous: VS Code](../vscode.md) · [Docs index](../index.md) · [Next: Daily commands →](daily.md)

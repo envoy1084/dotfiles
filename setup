@@ -35,6 +35,16 @@ case "$command_name" in
     packages)
         if "$write"; then brew bundle install --no-upgrade --file="$ROOT/Brewfile" "$@"
         else echo "Preview: brew bundle install --no-upgrade --file=$ROOT/Brewfile"; fi ;;
+    runtimes)
+        # Run from HOME so an unrelated project's mise.toml cannot join a restore.
+        if "$write"; then
+            (cd "$HOME" && mise install && mise reshim)
+        else
+            (cd "$HOME" && mise install --dry-run)
+        fi ;;
+    vscode)
+        if "$write"; then exec /usr/bin/python3 "$ROOT/scripts/vscode.py" --write "$@"; fi
+        exec /usr/bin/python3 "$ROOT/scripts/vscode.py" "$@" ;;
     macos)
         if "$write"; then exec /usr/bin/python3 "$ROOT/scripts/macos-defaults.py" --write; fi
         exec /usr/bin/python3 "$ROOT/scripts/macos-defaults.py" ;;
@@ -42,7 +52,8 @@ case "$command_name" in
         need_chezmoi; cz edit "$@" ;;
     help|--help|-h)
         echo 'Usage: ./setup status|diff|check|doctor'
-        echo '       ./setup init|apply|capture|packages|macos [--dry-run|--write]'
+        echo '       ./setup init|apply|capture|packages|runtimes|macos [--dry-run|--write]'
+        echo '       ./setup vscode [--dry-run|--write] [--capture]'
         echo '       ./setup edit <target>'
         echo 'Changes preview unless --write is provided.' ;;
     *) echo "Unknown command: $command_name (use ./setup help)" >&2; exit 2 ;;

@@ -1195,12 +1195,12 @@ binding = "Hyper+E"
 id = "openApp.com.microsoft.VSCode"
 
 [[hotkeys]]
-binding = "Hyper+B"
-id = "openApp.net.imput.helium"
-
-[[hotkeys]]
 binding = "Hyper+G"
 id = "openApp.com.t3tools.t3code"
+
+[[hotkeys]]
+binding = "Hyper+B"
+id = "openApp.net.imput.helium"
 
 [[workspaces]]
 id = "AD36F001-C57E-41A5-AC1D-DF5249D007F0"

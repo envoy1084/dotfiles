@@ -13,9 +13,26 @@ trailing = ["system-stats"]
 [profiles.default.widgets.active-window]
 display = "icon_only"
 
+[profiles.default.widgets.scratchpads]
+shownWindows = 2.0
+
 [profiles.default.workspaceBar]
+autoHide = false
+deduplicateAppIcons = false
 fullWidth = false
+hideInNativeFullscreen = true
 hoverPreviewsEnabled = false
 position = "overlappingMenuBar"
 reserveLayoutSpace = true
+showAccentHighlights = true
+showFloatingWindows = false
+showItemBackgrounds = false
+solidBlackBackground = false
+transparentBackground = false
 windowLevel = "status"
+
+[profiles.default.workspaceBar.accentColor]
+alpha = 1.0
+blue = 0.7894865274429321
+green = 0.36958032846450806
+red = 0.5273069143295288

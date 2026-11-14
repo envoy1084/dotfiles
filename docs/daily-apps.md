@@ -1,6 +1,6 @@
 # Daily apps
 
-[← Previous: VS Code](vscode.md) · [Docs index](index.md) · [Next: Shell guide →](shell/index.md)
+[← Previous: Raycast](raycast.md) · [Docs index](index.md) · [Next: Shell guide →](shell/index.md)
 
 ## Selected apps
 
@@ -62,4 +62,4 @@ Observed 2026-11-14 from the installed app bundles; these are not exact-version 
 
 ---
 
-[← Previous: VS Code](vscode.md) · [Docs index](index.md) · [Next: Shell guide →](shell/index.md)
+[← Previous: Raycast](raycast.md) · [Docs index](index.md) · [Next: Shell guide →](shell/index.md)

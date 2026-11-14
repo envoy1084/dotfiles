@@ -1,0 +1,12 @@
+[
+  {"name":"Email", "text":{{ .identity.email | toJson }}, "keyword":";;email"},
+  {"name":"GitHub Profile", "text":"https://github.com/envoy1084", "keyword":";;gh"},
+  {"name":"ISO Date", "text":"{date format=\"yyyy-MM-dd\"}", "keyword":";;date"},
+  {"name":"Timestamp", "text":"{date format=\"yyyy-MM-dd'T'HH:mm:ssXXX\"}", "keyword":";;time"},
+  {"name":"Bug Report", "text":"## Problem\n{cursor}\n\n## Expected behavior\n\n## Actual behavior\n\n## Steps to reproduce\n1. \n\n## Environment\n\n## Relevant logs or screenshots\n", "keyword":""},
+  {"name":"Pull Request Summary", "text":"## Problem\n{cursor}\n\n## Change\n\n## Validation\n\n## Remaining concerns\n", "keyword":""},
+  {"name":"Review Request", "text":"Please review the following change.\n\nScope: {cursor}\n\nRelevant files:\n\nQuestions or concerns:\n\nValidation already performed:\n", "keyword":""},
+  {"name":"Agent Handoff", "text":"## Objective\n{cursor}\n\n## Current state\n\n## Completed work\n\n## Remaining work\n\n## Constraints and decisions\n\n## Relevant files and commands\n\n## Validation\n", "keyword":""},
+  {"name":"Meeting Notes", "text":"# Meeting — {date format=\"yyyy-MM-dd\"}\n\n## Context\n{cursor}\n\n## Decisions\n\n## Actions\n- [ ] \n", "keyword":""},
+  {"name":"Debugging Context", "text":"## Goal\n{cursor}\n\n## Command or action\n\n## Error\n\n## Recent changes\n\n## Environment and versions\n\n## Already tried\n", "keyword":""}
+]

@@ -1,6 +1,6 @@
 # VS Code
 
-[← Previous: Ghostty](ghostty.md) · [Docs index](index.md) · [Next: Daily apps →](daily-apps.md)
+[← Previous: Ghostty](ghostty.md) · [Docs index](index.md) · [Next: Raycast →](raycast.md)
 
 [VS Code](https://code.visualstudio.com/) · Homebrew: `visual-studio-code`.
 
@@ -54,4 +54,4 @@ Recorded 2026-11-14: VS Code 1.146.0, JetBrains Mono Nerd Font 3.5.1. Individual
 
 ---
 
-[← Previous: Ghostty](ghostty.md) · [Docs index](index.md) · [Next: Daily apps →](daily-apps.md)
+[← Previous: Ghostty](ghostty.md) · [Docs index](index.md) · [Next: Raycast →](raycast.md)

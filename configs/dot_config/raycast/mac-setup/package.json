@@ -1,0 +1,23 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "mac-setup",
+  "title": "Mac Setup",
+  "description": "Your local Mac control menu: projects, network, capture, developer tools and dotfiles.",
+  "icon": "icon.png",
+  "author": "envoy1084",
+  "platforms": ["macOS"],
+  "categories": ["Productivity", "Developer Tools"],
+  "license": "MIT",
+  "commands": [
+    {"name":"index","title":"Mac Setup","description":"Browse your Mac tools and settings","mode":"view","keywords":["setup","control","omarchy","help"]},
+    {"name":"network","title":"Network Information","description":"Copy IP, hostname, DNS and inspect listening ports","mode":"view","keywords":["ip","wifi","dns","ports"]},
+    {"name":"projects","title":"Open Project","description":"Open projects in VS Code, Ghostty, GitHub or work/tmux","mode":"view","keywords":["projects","code","work","tmux"]},
+    {"name":"developer","title":"Developer Tools","description":"Local JSON, YAML, encoding, JWT, UUID, dates and text transforms","mode":"view","keywords":["json","yaml","base64","jwt","uuid","timestamp","diff"]},
+    {"name":"awake","title":"Keep Awake","description":"Control existing Amphetamine sessions","mode":"view","keywords":["awake","caffeine","amphetamine"]},
+    {"name":"capture","title":"Capture and Record","description":"Shottr screenshots, Cap recordings and Dropover","mode":"view","keywords":["record","screenshot","ocr","dropover","cap"]},
+    {"name":"dotfiles","title":"Dotfiles and Help","description":"Read-only status, diff, doctor and your documentation","mode":"view","keywords":["docs","doctor","config","brewfile","shortcuts"]}
+  ],
+  "dependencies": {"@raycast/api":"2.12.1", "react":"19.3.1"},
+  "devDependencies": {"@types/node":"26.6.5", "@types/react":"19.3.0", "typescript":"5.9.3"},
+  "scripts": {"build":"ray build", "bundle":"ray bundle", "dev":"ray develop", "typecheck":"tsc --noEmit"}
+}

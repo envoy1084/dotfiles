@@ -45,6 +45,9 @@ case "$command_name" in
     vscode)
         if "$write"; then exec /usr/bin/python3 "$ROOT/scripts/vscode.py" --write "$@"; fi
         exec /usr/bin/python3 "$ROOT/scripts/vscode.py" "$@" ;;
+    raycast)
+        if "$write"; then exec /usr/bin/python3 "$ROOT/scripts/raycast.py" --write "$@"; fi
+        exec /usr/bin/python3 "$ROOT/scripts/raycast.py" "$@" ;;
     macos)
         if "$write"; then exec /usr/bin/python3 "$ROOT/scripts/macos-defaults.py" --write; fi
         exec /usr/bin/python3 "$ROOT/scripts/macos-defaults.py" ;;
@@ -54,6 +57,7 @@ case "$command_name" in
         echo 'Usage: ./setup status|diff|check|doctor'
         echo '       ./setup init|apply|capture|packages|runtimes|macos [--dry-run|--write]'
         echo '       ./setup vscode [--dry-run|--write] [--capture]'
+        echo '       ./setup raycast [--dry-run|--write] [--check]'
         echo '       ./setup edit <target>'
         echo 'Changes preview unless --write is provided.' ;;
     *) echo "Unknown command: $command_name (use ./setup help)" >&2; exit 2 ;;

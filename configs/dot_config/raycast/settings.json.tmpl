@@ -1,0 +1,12 @@
+{
+  "dotfiles_root": {{ .chezmoi.workingTree | toJson }},
+  "projects_dir": {{ joinPath .chezmoi.homeDir "Projects" | toJson }},
+  "appearance": "dark",
+  "launcher_hotkey": "command+space",
+  "clipboard_hotkey": "control+command+v",
+  "clipboard_retention": "1 week",
+  "clipboard_ocr": "fast",
+  "content_search": false,
+  "scope_directories": ["Projects", "dotfiles", "Downloads", "Documents", "Desktop"],
+  "note": "Desired UI settings and local helper paths. This file does not configure Raycast's app-managed settings automatically."
+}

@@ -1,0 +1,19 @@
+# Raycast File Search exclusions, relative to the home directory.
+.ssh/
+.aws/
+.gnupg/
+.config/rclone/
+.codex/
+.claude/
+.t3/
+.local/share/atuin/
+.zsh_history
+.zsh_sessions/
+Library/
+dotfiles/research/
+**/node_modules/
+**/target/
+**/.git/
+**/.cache/
+**/dist/
+**/build/

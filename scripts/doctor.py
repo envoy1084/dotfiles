@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Read-only configuration and foundation checks; never installs or applies."""
 import argparse
+import ast
 import json
 from pathlib import Path
 import re
@@ -44,6 +45,18 @@ def main():
     syntax = [subprocess.run(["/bin/zsh", "-n"], input=e.get("contents", ""),
                              capture_output=True, text=True) for _, e in shell_files]
     report(all(result.returncode == 0 for result in syntax), "shell configuration syntax valid")
+    for path, entry in files:
+        if not path.startswith(".config/raycast/"):
+            continue
+        if path.endswith(".py"):
+            try:
+                ast.parse(entry.get("contents", ""))
+                report(True, "Raycast Python helper syntax valid")
+            except SyntaxError:
+                report(False, "Raycast Python helper syntax valid")
+        elif path.endswith(".sh"):
+            result = subprocess.run(["/bin/sh", "-n"], input=entry.get("contents", ""), capture_output=True, text=True)
+            report(result.returncode == 0, "Raycast script syntax: " + Path(path).name)
     for result in syntax:
         if result.returncode:
             print(result.stderr.strip())
@@ -100,6 +113,10 @@ def main():
             report(installed.returncode == 0 and not missing,
                    "VS Code extensions installed" + (": " + ", ".join(missing) if missing else ""))
     status = run(["chezmoi", "--source", str(ROOT), "status"])
+    if (Path.home() / ".config/raycast/settings.json").exists():
+        raycast = run([sys.executable, str(ROOT / "scripts/raycast.py"), "--check"])
+        print(raycast.stdout.strip())
+        report(raycast.returncode == 0, "Raycast local configuration valid")
     report(status.returncode == 0 and not status.stdout.strip(), "live configuration matches source")
     if status.stdout.strip():
         print(status.stdout.strip())

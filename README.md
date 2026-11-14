@@ -64,7 +64,7 @@ cd ~/dotfiles
 ./bootstrap --write
 ```
 
-Bootstrap installs the Brewfile packages, initializes chezmoi against this checkout, applies the managed config, installs the captured mise tools, restores missing VS Code extensions, then runs doctor. Runtime installation runs from your home directory so unrelated project configs cannot join the restore. It requires macOS and Command Line Tools, and can find Homebrew in the usual Apple Silicon/Intel locations. If a prerequisite is missing it prints the next step and exits.
+Bootstrap installs the Brewfile packages, initializes chezmoi against this checkout, applies the managed config, installs the captured mise tools, restores missing VS Code extensions, builds/imports the local Raycast extension, then runs doctor. Runtime installation runs from your home directory so unrelated project configs cannot join the restore. It requires macOS and Command Line Tools, and can find Homebrew in the usual Apple Silicon/Intel locations. If a prerequisite is missing it prints the next step and exits.
 
 Selected macOS preferences are separate, so they are not silently changed during a config restore:
 
@@ -102,6 +102,8 @@ VS Code preserves your EnvoyOS theme, existing extensions/formatters and snippet
 
 The shell uses a compact Pure-style Starship prompt in Tokyo Night colours, local Atuin history, fuzzy file search/completion, autosuggestions, syntax highlighting, and zoxide navigation. The installed terminal toolkit also covers files, Git, sessions, development, networking, media, and monitoring. See [shell tools and shortcuts](docs/shell/index.md).
 
+Raycast provides the launcher, clipboard, snippets and a local Mac Setup menu. Its code/content is managed under `configs/dot_config/raycast/`; use `./setup raycast --write` to rebuild/import the local extension. Native app preferences use supported export/import. See [Raycast setup and restore](docs/raycast.md).
+
 ## Machine-specific settings
 
 Keep local environment additions in `~/.zprofile.local`, interactive customisations in `~/.zshrc.local`, and machine/work-specific Git overrides in `~/.gitconfig.local`. These are read by managed config and stay outside Git. Future host-specific templates should be added only when there is an actual difference to support.
@@ -131,7 +133,7 @@ Existing tools outside Homebrew need their original installation channels restor
 | Codex CLI | 0.169.0 | Standalone installer; linked from `~/.local/bin` |
 | T3 CLI | 0.1.9 | T3-managed binary; linked from `~/.local/bin` |
 
-Portable application exports still to capture: Raycast preferences/extensions/shortcuts, Thaw layout, and Superwhisper modes/model preferences. VS Code settings, user tasks, four snippet files and 32 extension versions are captured; custom user keybindings were absent. VS Code sign-in/Settings Sync and extension credentials remain separate. Use supported exports; avoid copying entire app databases. Run `./doctor` after restoring.
+Raycast local commands, extension choices, Quicklinks and Snippets are captured; native preferences/aliases/hotkeys use the supported private export/import flow. See [Raycast](docs/raycast.md). Thaw layout and Superwhisper modes/model preferences still need supported exports. VS Code settings, user tasks, four snippet files and 32 extension versions are captured; custom user keybindings were absent. VS Code sign-in/Settings Sync and extension credentials remain separate. Use supported exports; avoid copying entire app databases. Run `./doctor` after restoring.
 
 ## Research and scratch work
 

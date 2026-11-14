@@ -53,6 +53,10 @@ toss() {
 }
 ports() { command lsof -nP -iTCP -sTCP:LISTEN; }
 lanip() {
+    if [[ -f "$HOME/.config/raycast/mac-tools.py" ]]; then
+        command /usr/bin/python3 "$HOME/.config/raycast/mac-tools.py" network ipv4 --plain
+        return
+    fi
     local net_device ip_address
     net_device=$(command route -n get default 2>/dev/null | command awk '/interface:/{print $2; exit}')
     [[ -n $net_device ]] || { print -u2 'No default network interface.'; return 1; }

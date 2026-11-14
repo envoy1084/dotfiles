@@ -27,3 +27,9 @@ id_*
 .zsh_history
 .zsh_sessions/
 .zcompdump*
+
+# Raycast build output stays local; source and dependency lock are managed.
+node_modules/
+dist/
+*.rayext
+*.rayconfig

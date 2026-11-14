@@ -82,7 +82,7 @@ The desktop uses five scrolling/niri workspaces, a Tokyo Night shell theme, righ
 
 Ghostty uses JetBrains Mono Nerd Font, TokyoNight Night, and local shortcuts that complement OmniWM. See [Ghostty shortcuts and settings](docs/ghostty.md).
 
-The shell uses a compact Pure-style Starship prompt in Tokyo Night colours, fuzzy history/file search, autosuggestions, syntax highlighting, and zoxide navigation. See [shell tools and shortcuts](docs/shell.md).
+The shell uses a compact Pure-style Starship prompt in Tokyo Night colours, fuzzy history/file search, autosuggestions, syntax highlighting, and zoxide navigation. The installed terminal toolkit also covers files, Git, sessions, development, networking, media, and monitoring. See [shell tools and shortcuts](docs/shell.md).
 
 ## Machine-specific settings
 
@@ -92,7 +92,7 @@ Changing the shared identity in `configs/.chezmoidata.toml` changes the Git temp
 
 ## Packages and growth
 
-`Brewfile` declares chezmoi and GitHub CLI, nine shell/CLI tools, eight app casks (including VLC), and JetBrains Mono Nerd Font. `./setup packages --write` installs with `--no-upgrade` and never invokes cleanup. Required dependencies may still be upgraded. A Brewfile records package selection, not exact historical binary versions.
+`Brewfile` declares chezmoi and GitHub CLI, 40 shell/CLI tools, eight app casks (including VLC), and JetBrains Mono Nerd Font. `./setup packages --write` installs with `--no-upgrade` and never invokes cleanup. Required dependencies may still be upgraded. A Brewfile records package selection, not exact historical binary versions.
 
 When adopting a tool, add its package declaration and useful config together. To manage another config, use `chezmoi add <specific-path>` and inspect the result. Changes to the desktop should be imported and committed deliberately. Do not enable automatic commit/push of every live app change.
 

@@ -1,92 +1,101 @@
 # My macOS setup
 
-Native macOS desktop and agent tools, captured on 14 November 2026. The repository lives at `~/dotfiles`.
+Native macOS productivity and agent setup, maintained in `~/dotfiles`.
 
-## What is managed
+Homebrew installs packages. Chezmoi owns configuration files. Git records changes. The setup wrapper previews changes unless `--write` is provided; it never uninstalls unrelated packages or automatically pushes configuration.
 
-- `Brewfile`: the seven currently installed Homebrew casks.
-- `configs/omniwm/`: settings, shell layout, and custom wallpaper palette.
-- `configs/ghostty/`: current Ghostty configuration (still the default template).
-- `configs/zsh/zprofile`: Homebrew setup and a portable `$HOME/.local/bin` PATH.
-- `configs/ssh/config`: GitHub SSH client configuration; no keys.
-- `macos-defaults.json`: the selected existing dark-mode, scrolling, and Dock preferences.
-- `state/observed.json`: observed versions, external installations, and remaining manual setup.
+The foundation is currently local-only. GitHub repository creation and GitHub CLI sign-in are deferred at the user's request. Doctor reports those as informational items; no remote has been created or pushed. After creating a private repo later, add its URL as `origin` and push `main`.
 
-OmniWM currently uses scrolling/niri layouts, five workspaces, and the Tokyo Night shell theme. Its clipboard history, IPC, and Quake terminal are currently disabled. These existing choices are preserved, not redesigned by this repository.
-
-Configuration files are copied instead of symlinked because desktop apps can rewrite them. Saving settings inside an app does not automatically update Git; capture them afterward.
-
-## Inspect and validate
+## Daily commands
 
 ```sh
 cd ~/dotfiles
-./setup status
-./setup check
-./setup apply --dry-run
+./doctor                       # read-only foundation and drift checks
+./setup diff                   # proposed configuration changes
+./setup apply                  # preview; no config changes
+./setup apply --write           # backup changed files, then apply via chezmoi
 ```
 
-All mutation commands preview by default. Only `--write` applies changes. Running `./setup` by itself reports file status.
-
-## Restore on another Mac
-
-Install Apple's Command Line Tools and Homebrew first. On this Mac they are already present. No additional Python package is required; the scripts use the system Python 3 and standard library.
+Plain `chezmoi` commands also use this repo after initialization:
 
 ```sh
-cd ~/dotfiles
-./setup packages --write
-./setup apply --write
-./setup macos --write
+chezmoi edit ~/.zprofile
+chezmoi diff
+chezmoi apply
+git -C ~/dotfiles diff
 ```
 
-Packages installs missing Brewfile entries without requesting upgrades of existing packages, and never runs cleanup. Homebrew may still upgrade dependencies if installation requires it. Brewfile selections are not exact binary/version locks.
+Our apply wrapper adds an external backup before invoking chezmoi. Direct `chezmoi apply` uses chezmoi's own conflict handling and does not run that backup helper.
 
-Apply backs up changed files under `~/Library/Application Support/dotfiles/backups/` before copying them. SSH's directory/config receive restrictive permissions. Re-running apply when file contents and permissions match makes no changes.
-
-The macOS command backs up the selected previous preference values, then writes only the settings in `macos-defaults.json`. It does not restart apps automatically. Some changes require a new login or restarting Dock.
-
-Open OmniWM, Raycast, Superwhisper, and Thaw after installation and complete their permission/login prompts. The scripts do not grant Accessibility, Screen Recording, microphone, or other privacy permissions.
-
-## Keep it current
-
-After changing an app's managed config:
+When changing settings through an app, explicitly import the specific file:
 
 ```sh
-./setup capture --dry-run
-./setup capture --write
+chezmoi add ~/.config/omniwm/settings.toml
 git diff
 git add .
-git commit -m "Update desktop configuration"
+git commit -m "Update workspace configuration"
+# Once an origin remote is configured: git push
 ```
 
-Capture copies only the files listed in `manifest.json`. It normalizes your home-directory path in the shell profile and backs up previous repository files. It rejects obvious private-key or credential assignments, but always inspect the diff before publishing.
+`./setup capture` previews importing all already-managed configs; `./setup capture --write` imports them. Review the diff, particularly templates, before committing. It does not sweep arbitrary home files, app databases, or credentials into Git.
 
-After intentionally adding a Homebrew package, add its declaration to `Brewfile`. To regenerate the list from the whole machine, use `brew bundle dump --file=/tmp/mac-Brewfile` and review it before replacing the tracked file. Capture does not automatically import every installed package or preference.
+## New Mac
 
-New managed dotfiles need an explicit source/target entry in `manifest.json`; unrelated files are never swept into the repo.
-
-## Separate manual items
-
-Helium, T3 Code, Codex CLI, and T3 CLI are installed outside Homebrew. Their observed versions and locations are recorded in `state/observed.json`; they do not yet have restore automation here. Keep their existing distribution/update channels until explicitly choosing a managed alternative.
-
-Celestial 1.1.0 is installed from `github:OmniNull/OmniWM@v0.8.0`, with no changes against its manifest at capture time. The active shell profile is `default`. The style source is recorded instead of committing its fonts and generated widget code. Reinstall the style through OmniWM if needed; only the personal shell overrides/palette are managed here.
-
-Raycast preferences/extensions, Thaw layouts, and Superwhisper modes/model settings still need app-supported exports. Their databases and credentials are not copied. No custom VS Code extensions were detected at capture time. The old AeroSpace setup is deliberately excluded.
-
-## Git and secrets
-
-This is a local Git repository with no remote. A Git name/email were not configured at creation, so no initial commit was fabricated. Set your own identity, then commit:
+1. Install Apple's Command Line Tools (`xcode-select --install`) and Homebrew from https://brew.sh.
+2. Install GitHub CLI (`brew install gh`) and authenticate (`gh auth login`). A private repo needs authentication before cloning. Register a new SSH key when choosing SSH, or use HTTPS.
+3. Clone your private repository into `~/dotfiles`.
+4. Preview, then restore:
 
 ```sh
-git config user.name "Your Name"
-git config user.email "your-email@example.com"
-git add .
-git commit -m "Capture current macOS setup"
+cd ~/dotfiles
+./bootstrap --dry-run
+./bootstrap --write
 ```
 
-These settings apply only to this repository unless you add `--global`.
+Bootstrap installs the Brewfile packages, initializes chezmoi against this checkout, applies the managed config, then runs doctor. It requires macOS and Command Line Tools, and can find Homebrew in the usual Apple Silicon/Intel locations. If a prerequisite is missing it prints the next step and exits.
 
-Never commit private SSH keys, API tokens, agent auth files, Keychain data, browser profiles, conversations, or app databases. `.gitignore` excludes common secret/local/export paths. SSH public keys and account sign-ins remain separately managed; a new Mac can generate a new key.
+Selected macOS preferences are separate, so they are not silently changed during a config restore:
 
-## Files versus runtime state
+```sh
+./setup macos                  # preview
+./setup macos --write          # backup selected previous values, then apply
+```
 
-This repository captures selected configuration and package selection. It is not a full machine image, personal-file backup, or exact reproduction of app versions. App permissions, login items, sign-ins, and settings without exports remain manual until explicitly automated.
+No apps are automatically restarted. Some preference changes need a new login or restarting Dock. Finish the application permissions/sign-ins in [docs/manual-steps.md](docs/manual-steps.md).
+
+## Configuration layout
+
+`.chezmoiroot` selects `configs/` as the source-state root. Chezmoi names encode destination paths and permissions: `dot_zprofile` becomes `~/.zprofile`; `private_dot_ssh/private_config` becomes `~/.ssh/config` with owner-only permissions. `private_` does not encrypt a file or keep it out of Git. `private_Library` preserves the existing private permissions on `~/Library`.
+
+Managed configuration:
+
+- `configs/dot_config/omniwm/`: workspace settings, shell layout, wallpaper palette.
+- `configs/private_Library/Application Support/com.mitchellh.ghostty/`: current Ghostty config.
+- `configs/dot_zprofile`: Homebrew environment, portable local-bin PATH, optional local overrides.
+- `configs/private_dot_ssh/private_config`: GitHub client options, no keys.
+- `configs/dot_gitconfig.tmpl`: Git identity from `configs/.chezmoidata.toml`.
+- `configs/.chezmoi.toml.tmpl`: machine-local chezmoi initialization; resolves the actual checkout path.
+
+The existing desktop choices are preserved: five scrolling/niri workspaces, Tokyo Night shell theme, and currently disabled clipboard history, IPC, and Quake terminal. Ghostty is still using its default template.
+
+## Machine-specific settings
+
+Keep local shell additions in `~/.zprofile.local` and machine/work-specific Git overrides in `~/.gitconfig.local`. Both are read by managed config and stay outside Git. Future host-specific templates should be added only when there is an actual difference to support.
+
+Changing the shared identity in `configs/.chezmoidata.toml` changes the Git template. Per-repository Git config still takes precedence; the initial dotfiles repo has a local identity established from the authenticated GitHub profile.
+
+## Packages and growth
+
+`Brewfile` currently declares chezmoi and GitHub CLI plus the existing seven app casks. `./setup packages --write` installs with `--no-upgrade` and never invokes cleanup. Required dependencies may still be upgraded. A Brewfile records package selection, not exact historical binary versions.
+
+When adopting a tool, add its package declaration and useful config together. To manage another config, use `chezmoi add <specific-path>` and inspect the result. Changes to the desktop should be imported and committed deliberately. Do not enable automatic commit/push of every live app change.
+
+`state/observed.json` records the initial app versions and external installation channels. It is historical inventory, not a lockfile. Missing app exports and outside-Homebrew installs are documented separately; see the manual checklist.
+
+## Recovery and privacy
+
+The baseline commit preserves the pre-chezmoi setup. Review `git log` and a proposed `chezmoi diff` when rolling back to an older configuration. The initial migration and wrapper applies keep backups under `~/Library/Application Support/dotfiles/backups/`, outside Git.
+
+Keep SSH keys, tokens, Keychain material, browser/app databases, and agent conversations out of this repository. Doctor checks obvious forbidden target names and private-key content, but it is not a comprehensive secret scanner; review every diff before pushing, including to a private repo.
+
+Dotfiles are not a backup of personal work or a complete machine image. Privacy permissions, sign-ins, app settings without portable exports, and exact historical binary versions remain separate concerns.

@@ -1,0 +1,6 @@
+[user]
+    name = {{ .identity.name | quote }}
+    email = {{ .identity.email | quote }}
+
+[include]
+    path = ~/.gitconfig.local

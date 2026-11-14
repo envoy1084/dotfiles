@@ -1,4 +1,49 @@
 #!/bin/sh
 set -eu
-DOTFILES_ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-exec /usr/bin/python3 "$DOTFILES_ROOT/scripts/dotfiles.py" "$@"
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+command_name=${1:-status}
+if [ "$#" -gt 0 ]; then shift; fi
+need_chezmoi() {
+    command -v chezmoi >/dev/null 2>&1 || { echo 'Run brew install chezmoi gh first.' >&2; exit 1; }
+}
+cz() { chezmoi --source "$ROOT" --no-pager "$@"; }
+write=false
+case "${1:-}" in
+    --write) write=true; shift ;;
+    --dry-run) shift ;;
+esac
+case "$command_name" in
+    status|diff)
+        need_chezmoi; cz "$command_name" "$@" ;;
+    check)
+        exec /usr/bin/python3 "$ROOT/scripts/doctor.py" --config-only "$@" ;;
+    doctor)
+        exec "$ROOT/doctor" "$@" ;;
+    init)
+        need_chezmoi
+        if "$write"; then cz init "$@"; else cz init --dry-run --verbose "$@"; fi ;;
+    apply)
+        need_chezmoi
+        if "$write"; then
+            /usr/bin/python3 "$ROOT/scripts/doctor.py" --config-only
+            /usr/bin/python3 "$ROOT/scripts/backup.py"
+            cz apply --error-on-conflict "$@"
+        else cz apply --dry-run --verbose "$@"; fi ;;
+    capture)
+        need_chezmoi
+        if "$write"; then cz re-add "$@"; else cz re-add --dry-run --verbose "$@"; fi ;;
+    packages)
+        if "$write"; then brew bundle install --no-upgrade --file="$ROOT/Brewfile" "$@"
+        else echo "Preview: brew bundle install --no-upgrade --file=$ROOT/Brewfile"; fi ;;
+    macos)
+        if "$write"; then exec /usr/bin/python3 "$ROOT/scripts/macos-defaults.py" --write; fi
+        exec /usr/bin/python3 "$ROOT/scripts/macos-defaults.py" ;;
+    edit)
+        need_chezmoi; cz edit "$@" ;;
+    help|--help|-h)
+        echo 'Usage: ./setup status|diff|check|doctor'
+        echo '       ./setup init|apply|capture|packages|macos [--dry-run|--write]'
+        echo '       ./setup edit <target>'
+        echo 'Changes preview unless --write is provided.' ;;
+    *) echo "Unknown command: $command_name (use ./setup help)" >&2; exit 2 ;;
+esac

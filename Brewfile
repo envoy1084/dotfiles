@@ -53,6 +53,10 @@ brew "resvg"
 brew "zsh-completions"
 brew "fzf-tab"
 
+# Containers: Docker CLI with OrbStack as the engine.
+brew "docker"
+cask "orbstack"
+
 cask "claude-code"
 cask "font-jetbrains-mono-nerd-font"
 cask "ghostty"

@@ -15,6 +15,7 @@
 | [Amphetamine](https://apps.apple.com/app/id937984704) | On-demand keep-awake sessions | `mas "Amphetamine", id: 937984704` |
 | [Cap](https://cap.so/) | Screen recording and sharing | `cask "cap"` |
 | [Figma](https://www.figma.com/downloads/) | Interface design and collaboration | `cask "figma"` |
+| [OrbStack](https://orbstack.dev/) | Container engine and macOS container manager | `cask "orbstack"`; Docker CLI: `brew "docker"` |
 
 The Homebrew `telegram` cask selects Telegram for macOS. Shottr handles screenshots; Cap handles recordings. Existing login items, notifications and global shortcuts are preserved.
 
@@ -41,6 +42,7 @@ Homebrew records package choices rather than exact app versions. Casks can lag o
 
 - Sign in to Slack, Discord and Telegram. Link Signal to Signal on your phone.
 - Sign in to Figma; account and workspace access remain per-Mac setup steps.
+- Open OrbStack to finish onboarding when you want to use containers. Homebrew owns the `docker` CLI; OrbStack supplies the engine. Docker Desktop is not installed. No container images, containers, Linux machines or services were provisioned during installation. Any OrbStack-provided Compose/buildx tools can be checked after onboarding before adding separate packages.
 - Grant Shottr and Cap screen capture permissions when requested; microphone/camera access depends on the recording features you enable.
 - Finish Dropover onboarding and choose any in-app licence upgrade yourself.
 - Start Amphetamine sessions when needed; login items and automatic triggers remain your choices.
@@ -62,6 +64,9 @@ Observed 2026-11-14 from the installed app bundles; these are not exact-version 
 | Amphetamine | 5.3.2 |
 | Cap | 0.6.2 |
 | Figma | 126.11.9 |
+| OrbStack | 2.2.5 (installed 2026-11-15) |
+
+Docker CLI 29.9.3 was installed through Homebrew on 2026-11-15. OrbStack onboarding is pending; no image pulls or container runs were performed.
 
 ---
 
